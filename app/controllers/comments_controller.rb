@@ -12,6 +12,12 @@ class CommentsController < ApplicationController
   end
 
   def create
+    # ALSO consider.
+    #
+    #  current_user.comments.build(comment_params)
+    #  if current_user.comments.save
+    #  ...
+    #
     @comment = Comment.new(comment_params)
     @answer = Answer.find(params[:commentable_id])
     current_user.comments << @comment
@@ -29,6 +35,7 @@ class CommentsController < ApplicationController
   end
 
   def update
+    # Probably also broken because of = as assignment evaluating as true
     if current_user = @comment.user_id
       if @comment.update(comment_params)
         redirect_to question_path(@answer.question_id)
@@ -42,9 +49,9 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find(params[:id])
-    @question = Question.find(@answer.question.id)
+    question = Question.find(@answer.question.id)
     comment.destroy
-    redirect_to question_path(@question)
+    redirect_to question_path(question)
   end
 
   private

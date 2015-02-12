@@ -18,8 +18,8 @@ class QuestionsController < ApplicationController
 
 #POST /questions
   def create
-    @question = Question.create(question_params)
-    current_user.questions << @question
+    question = Question.create(question_params)
+    current_user.questions << question
     redirect_to user_path(current_user.id)
   end
 

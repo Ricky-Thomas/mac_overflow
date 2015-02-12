@@ -3,6 +3,8 @@ require 'rails_helper'
 describe AnswersController do
   describe 'GET #show' do
     it "renders the :show template for the answer" do
+      # let() is the preferred way to generate instances within tests
+      # let(:question) { create(:question) }
       question = create(:question)
       answer = create(:answer)
       get :show, id: answer, question_id: question.id

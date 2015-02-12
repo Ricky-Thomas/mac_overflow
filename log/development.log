@@ -523,3 +523,1886 @@ WHERE c.contype = 'f'
 ORDER BY c.conname
 
   [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (36.5ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (2.3ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20150205224742)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (30.6ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "name" character varying, "email" character varying, "password_digest" character varying, "pic_url" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (8.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20150205224742"]]
+  [1m[36m (12.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateQuestions (20150205224756)
+  [1m[35m (4.8ms)[0m  BEGIN
+  [1m[36m (11.6ms)[0m  [1mCREATE TABLE "questions" ("id" serial primary key, "prompt" text, "user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20150205224756"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreateAnswers (20150205224801)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (12.5ms)[0m  [1mCREATE TABLE "answers" ("id" serial primary key, "content" text, "question_id" integer, "user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20150205224801"]]
+  [1m[36m (1.6ms)[0m  [1mCOMMIT[0m
+Migrating to CreateVotes (20150205224805)
+  [1m[35m (10.3ms)[0m  BEGIN
+  [1m[36m (16.9ms)[0m  [1mCREATE TABLE "votes" ("id" serial primary key, "votable_id" integer, "votable_type" character varying, "user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX  "index_votes_on_votable_type_and_votable_id" ON "votes"  ("votable_type", "votable_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20150205224805"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to CreateComments (20150205224809)
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35m (4.4ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "content" text, "commentable_id" integer, "commentable_type" character varying, "user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20150205224809"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddTitleToQuestions (20150206004917)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (2.9ms)[0m  ALTER TABLE "questions" ADD "title" character varying
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20150206004917"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+Migrating to AddBestToQuestion (20150206160428)
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+  [1m[35m (8.0ms)[0m  ALTER TABLE "questions" ADD "best" boolean DEFAULT 'false'
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20150206160428"]]
+  [1m[35m (1.1ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.9ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'answers'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36m (2.1ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'comments'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (4.9ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'questions'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36m (2.3ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.9ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'votes'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (3.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Damian Kuhlman II"], ["email", "emmitt@tromp.name"], ["password_digest", "$2a$10$u7FhDhJjgfMPZzDmR12CKeurpxtDw5Ekbl9CxlAEcFSjbFw5NuUEG"], ["pic_url", "http://bins.info/tremaine"], ["created_at", "2015-02-12 16:00:51.036431"], ["updated_at", "2015-02-12 16:00:51.036431"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "Jacklyn Mertz"], ["email", "rosalinda.macejkovic@bartell.org"], ["password_digest", "$2a$10$vbMgxf5fgCy8GRGdxwq/6uru2sMyQofsRR/x7NdzO78PJxmyLsis6"], ["pic_url", "http://raynor.com/ottis"], ["created_at", "2015-02-12 16:00:51.135267"], ["updated_at", "2015-02-12 16:00:51.135267"]]
+  [1m[36m (1.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Nyah Okuneva"], ["email", "nigel@ledner.com"], ["password_digest", "$2a$10$MSFdtn3qN7nEZwWc45Q27u0YcR59hbP.4gTfw2iOq0ruHB8nC9MGa"], ["pic_url", "http://klein.com/delmer.keler"], ["created_at", "2015-02-12 16:00:51.264760"], ["updated_at", "2015-02-12 16:00:51.264760"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "Ethelyn Kiehn"], ["email", "angelica_trantow@hermann.name"], ["password_digest", "$2a$10$M7llt.UuqZmma2MP0n5uluKrzf5Iz5u/Wxo0tMIW2rSij/Q/dNqmq"], ["pic_url", "http://bartell.name/moses.reynolds"], ["created_at", "2015-02-12 16:00:51.400735"], ["updated_at", "2015-02-12 16:00:51.400735"]]
+  [1m[36m (5.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Adele Gutmann"], ["email", "stewart@ortiz.info"], ["password_digest", "$2a$10$BQgWl1EaRzGQra4VIubFXObgcezq0VCh/j7lYQLr2wv/OTgO4gvUa"], ["pic_url", "http://haleyschimmel.info/jena"], ["created_at", "2015-02-12 16:00:51.489865"], ["updated_at", "2015-02-12 16:00:51.489865"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "Louvenia Dicki DDS"], ["email", "maud.willms@hudsonboehm.net"], ["password_digest", "$2a$10$my/ZknDQAkv3Zp53OVn3x./id73UWyhBfMzU4.oh1JpzubUf5Gir."], ["pic_url", "http://hoppe.info/ayden"], ["created_at", "2015-02-12 16:00:51.578649"], ["updated_at", "2015-02-12 16:00:51.578649"]]
+  [1m[36m (6.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Darryl Walker"], ["email", "thurman@townestoltenberg.org"], ["password_digest", "$2a$10$q/srHVzBtRCA36vBsyvoa.5WBkzUPRZFWIpiZ8o5.vT9cgqylQeg."], ["pic_url", "http://pollich.name/alyce.bailey"], ["created_at", "2015-02-12 16:00:51.672744"], ["updated_at", "2015-02-12 16:00:51.672744"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "Duncan Mosciski"], ["email", "amiya@kuvalislakin.name"], ["password_digest", "$2a$10$/ffdGyuvViESl4ZnBs4DnegrR9GWdvYTitjUbZfAo5U1kDdg3YJGm"], ["pic_url", "http://schoen.name/justyn"], ["created_at", "2015-02-12 16:00:51.758502"], ["updated_at", "2015-02-12 16:00:51.758502"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Mrs. Guy MacGyver"], ["email", "earl@schuppe.com"], ["password_digest", "$2a$10$YE4B.sws6fMdDb0Dvm3Liei.5mi/F0Mk3ybL9Zc1MY9zoLzB.lZ0S"], ["pic_url", "http://ankunding.org/gerson"], ["created_at", "2015-02-12 16:00:51.840357"], ["updated_at", "2015-02-12 16:00:51.840357"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "pic_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "Maurine Pfannerstill"], ["email", "preston@wunschconnelly.net"], ["password_digest", "$2a$10$Yivy5Qh6Ev6VcVCW6GyG.O33lHO7xNbONX9MGtoeKoGLSpRX94wP6"], ["pic_url", "http://hegmann.name/jey_barrows"], ["created_at", "2015-02-12 16:00:51.981635"], ["updated_at", "2015-02-12 16:00:51.981635"]]
+  [1m[36m (1.6ms)[0m  [1mCOMMIT[0m
+  [1m[35mUser Load (1.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36m (1.6ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Provident enim aut repudiandae ipsa qui."], ["prompt", "Maxime ratione aut possimus. Illo dolores consequuntur quo dolor rerum. Qui cupiditate beatae nemo voluptate sequi inventore unde. Voluptas est officia pariatur cum laborum. Non doloribus alias velit voluptates."], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.019538"], ["updated_at", "2015-02-12 16:00:52.019538"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.7ms)[0m  [1mINSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Odio quam voluptatum cumque culpa velit voluptas quia quae."], ["prompt", "Commodi consequuntur dolor adipisci nam. Nostrum libero vero dolorem ut ratione non. Repudiandae est nesciunt magni deleniti impedit."], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.029023"], ["updated_at", "2015-02-12 16:00:52.029023"]]
+  [1m[35m (1.4ms)[0m  COMMIT
+  [1m[36m (1.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Natus dolorum a facilis repellendus."], ["prompt", "Veniam autem illum deserunt. Est mollitia tempore neque iste. Nobis ut doloribus cum repellendus ducimus neque. Voluptatem necessitatibus facere sapiente dolore quo."], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.038528"], ["updated_at", "2015-02-12 16:00:52.038528"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Ut incidunt aut voluptatem cupiditate velit temporibus."], ["prompt", "Qui nisi iure provident doloribus sed cumque ab. Veniam maxime fugiat necessitatibus voluptates dolorem in. Aut facilis dolorum et doloremque qui. Iure in sit asperiores et eius tenetur."], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.041692"], ["updated_at", "2015-02-12 16:00:52.041692"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Amet et qui est aut necessitatibus velit labore."], ["prompt", "Recusandae sit explicabo consequatur voluptates libero voluptate. Aut omnis voluptatem facere aperiam quaerat. Placeat beatae repellat omnis ex cupiditate fuga quos. Ullam eum et repellendus. Saepe velit repellendus."], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.045548"], ["updated_at", "2015-02-12 16:00:52.045548"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Sed et corrupti velit sequi atque occaecati cumque."], ["prompt", "Modi aut ea repellat. Autem ut eum ab consequatur. Qui fugiat quidem ut eum pariatur minus. Iusto voluptas qui molestiae dignissimos voluptatibus. Delectus voluptatem cupiditate ratione quasi est."], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.049971"], ["updated_at", "2015-02-12 16:00:52.049971"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Id voluptate rerum corporis."], ["prompt", "Odio animi sit nisi esse. Commodi ut nam et in voluptatem cumque. Optio qui libero natus eligendi omnis iusto atque. Quia quae fugit blanditiis et ipsum. Et nam quia veniam doloribus."], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.055880"], ["updated_at", "2015-02-12 16:00:52.055880"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Autem vel neque temporibus reprehenderit velit dolores quis enim."], ["prompt", "Commodi omnis quod. Numquam fugit voluptatem sint labore nihil inventore illum. Dolor possimus maiores dignissimos vitae a beatae excepturi. Vitae necessitatibus perferendis voluptatibus odio tempora sint. Quia veritatis illo architecto dolor laboriosam occaecati sed."], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.060615"], ["updated_at", "2015-02-12 16:00:52.060615"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["title", "Similique inventore dolores sit."], ["prompt", "Voluptas error provident. Mollitia atque similique dolor. Nulla eius nihil molestias culpa voluptatem. Labore consequatur qui."], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.063889"], ["updated_at", "2015-02-12 16:00:52.063889"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.7ms)[0m  [1mINSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Molestias veniam qui aut sequi voluptatibus iusto saepe."], ["prompt", "Earum ipsa nobis aut voluptatum explicabo perferendis. Recusandae magni voluptas omnis. Perferendis atque laboriosam. Ea aut ut explicabo non dignissimos voluptatem."], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.067786"], ["updated_at", "2015-02-12 16:00:52.067786"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36mQuestion Load (0.4ms)[0m  [1mSELECT "questions".* FROM "questions"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (6.7ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Earum deleniti qui nostrum non rem. Voluptas consequuntur voluptate delectus. Ex sequi perferendis non earum in."], ["question_id", 9], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.089112"], ["updated_at", "2015-02-12 16:00:52.089112"]]
+  [1m[35m (6.8ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Et et non quisquam molestias explicabo. Qui qui autem optio facere unde aliquid. Odit labore voluptatibus sint. Nesciunt vel vitae et."], ["question_id", 8], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.107079"], ["updated_at", "2015-02-12 16:00:52.107079"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Voluptate est ab eos ea est sint. Nemo voluptate veritatis commodi ipsam. Vel cumque rerum."], ["question_id", 3], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.110363"], ["updated_at", "2015-02-12 16:00:52.110363"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Voluptatem consequatur natus laboriosam qui non eos. Aspernatur qui illo quam tenetur. Dicta sequi adipisci ullam ut molestiae unde cumque. Sed dolor enim excepturi recusandae sunt."], ["question_id", 10], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.113796"], ["updated_at", "2015-02-12 16:00:52.113796"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Dolores voluptatum odit iure qui quos ad minus. Voluptas aperiam alias vitae. Quo totam molestiae sunt impedit. Quidem tempore veritatis quas accusantium. Eligendi eos fugit accusamus saepe ut laudantium iste."], ["question_id", 4], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.117436"], ["updated_at", "2015-02-12 16:00:52.117436"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Quis iste ratione nobis minima at eaque pariatur. Minima fugit molestiae dolorem autem molestiae. Voluptatum quas itaque. Sed debitis eaque ut quia odio veritatis. Soluta dignissimos quas assumenda qui magnam adipisci."], ["question_id", 2], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.121944"], ["updated_at", "2015-02-12 16:00:52.121944"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Suscipit nostrum aut recusandae nihil aut. Minus animi est saepe dolor est. Deserunt nostrum totam veniam temporibus sequi rerum sunt. A harum inventore voluptates et."], ["question_id", 1], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.124152"], ["updated_at", "2015-02-12 16:00:52.124152"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Quis minima architecto temporibus nihil placeat. Iusto eum molestiae. Quisquam id qui illum eligendi voluptatem. Animi eos assumenda nulla tempore et in. Ipsam quia fuga et unde."], ["question_id", 6], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.127671"], ["updated_at", "2015-02-12 16:00:52.127671"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Est qui dolorem rerum. Rerum et quod rem quia temporibus. Non laborum dolore nam sint ad. Reprehenderit quo aut voluptas illo."], ["question_id", 10], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.130948"], ["updated_at", "2015-02-12 16:00:52.130948"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Accusantium mollitia labore facere quod. Omnis sint dolore dignissimos repellendus quibusdam asperiores. Sit praesentium quia. Officiis molestiae et. Vitae autem dicta."], ["question_id", 3], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.134527"], ["updated_at", "2015-02-12 16:00:52.134527"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Nemo dolore et. Itaque sed voluptas culpa provident aliquam sunt nihil. Aut placeat omnis dolorem numquam a et ea."], ["question_id", 6], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.141123"], ["updated_at", "2015-02-12 16:00:52.141123"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Sed nihil quos. Esse molestiae voluptas est architecto facilis. Repellat aperiam sed recusandae voluptatem ratione ea."], ["question_id", 8], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.144191"], ["updated_at", "2015-02-12 16:00:52.144191"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Sunt cum quo nobis. Dolorem sit iste enim accusamus quasi voluptatum. Quo ipsa labore velit quia nulla."], ["question_id", 10], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.147381"], ["updated_at", "2015-02-12 16:00:52.147381"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Vero consectetur odio. Repellat et sit delectus. Voluptatem provident qui iure dolores. Dolor aut est et blanditiis rerum doloribus accusantium."], ["question_id", 5], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.150635"], ["updated_at", "2015-02-12 16:00:52.150635"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Illum sunt sunt. Eaque laborum id quibusdam. Nostrum incidunt quia quasi."], ["question_id", 6], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.156215"], ["updated_at", "2015-02-12 16:00:52.156215"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Aut eius consequatur. Ut optio et qui nihil exercitationem sunt. Tempore ea ea saepe quis tenetur. Nobis qui eligendi voluptatum eum quidem."], ["question_id", 10], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.159358"], ["updated_at", "2015-02-12 16:00:52.159358"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Alias omnis sit non. Tenetur ipsam dolor sunt modi consequatur. Enim quia inventore ab quisquam. Culpa doloribus rerum temporibus. Deserunt assumenda quis est vel dignissimos eos omnis."], ["question_id", 8], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.163194"], ["updated_at", "2015-02-12 16:00:52.163194"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Ipsum aut fuga. Necessitatibus molestias voluptatem qui quis. In quam suscipit libero deleniti. Praesentium sit ea vel. Odit aut placeat qui voluptas natus ut."], ["question_id", 7], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.166881"], ["updated_at", "2015-02-12 16:00:52.166881"]]
+  [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Quod tempora ut facilis iure quo voluptatum deleniti. Quos in dolores quia quaerat. Praesentium et et rem est distinctio aut. Pariatur et ducimus earum quas debitis quia."], ["question_id", 4], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.174555"], ["updated_at", "2015-02-12 16:00:52.174555"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "answers" ("content", "question_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["content", "Aut dolorum laudantium facere eaque iure impedit et. Delectus perferendis praesentium velit. Et est non autem pariatur quaerat aut. Dicta saepe harum et dolorem et eum."], ["question_id", 3], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.178333"], ["updated_at", "2015-02-12 16:00:52.178333"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (6.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Delectus sunt ducimus ad enim. Aut accusantium eius repellendus qui corporis. Amet et quos quam ipsum. Corrupti omnis quos voluptatum at molestiae vero. Qui tenetur eius eligendi omnis."], ["commentable_id", 8], ["commentable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.191804"], ["updated_at", "2015-02-12 16:00:52.191804"]]
+  [1m[35m (6.7ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Dolorum exercitationem deserunt fuga nihil qui qui. Temporibus impedit omnis nesciunt dolorem odio dolor ut. Est eaque non numquam."], ["commentable_id", 5], ["commentable_type", "Answer"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.209080"], ["updated_at", "2015-02-12 16:00:52.209080"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Qui voluptatem ut esse. Deleniti earum accusantium. In et alias aut doloribus. Alias et sit voluptas quisquam laboriosam. Rerum et aut."], ["commentable_id", 4], ["commentable_type", "Answer"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.213007"], ["updated_at", "2015-02-12 16:00:52.213007"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Impedit aperiam sequi in adipisci saepe necessitatibus molestias. Voluptatem ratione magni voluptatem. Nulla perferendis et sint. Maxime vero animi et nulla suscipit. Facilis ut beatae numquam rem sit."], ["commentable_id", 5], ["commentable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.216881"], ["updated_at", "2015-02-12 16:00:52.216881"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Suscipit saepe tempore. Perferendis quo cupiditate impedit. Aut nisi praesentium sequi vel. Et dolor ratione quas incidunt occaecati."], ["commentable_id", 9], ["commentable_type", "Question"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.223878"], ["updated_at", "2015-02-12 16:00:52.223878"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Hic repellendus quisquam et id laudantium autem voluptatem. Dolor delectus quidem. Eligendi qui quis ducimus."], ["commentable_id", 2], ["commentable_type", "Question"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.227698"], ["updated_at", "2015-02-12 16:00:52.227698"]]
+  [1m[36m (2.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Rerum commodi id provident earum nam. Est sed quibusdam earum ullam. Ut sequi in nihil."], ["commentable_id", 4], ["commentable_type", "Answer"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.235988"], ["updated_at", "2015-02-12 16:00:52.235988"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Possimus nam quasi eveniet distinctio occaecati est consequatur. Ut at dignissimos consequatur sed libero. Est in facilis dolorum."], ["commentable_id", 7], ["commentable_type", "Question"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.239282"], ["updated_at", "2015-02-12 16:00:52.239282"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Aliquid excepturi ad assumenda natus porro. Consequatur dicta voluptatem cum. Non veniam aut temporibus odio blanditiis. Quia molestiae rerum quae debitis."], ["commentable_id", 3], ["commentable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.241425"], ["updated_at", "2015-02-12 16:00:52.241425"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Aliquid quia voluptates labore sit et modi. Dolorem sapiente vero modi qui suscipit voluptatem. Saepe amet qui quisquam iusto."], ["commentable_id", 6], ["commentable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.245499"], ["updated_at", "2015-02-12 16:00:52.245499"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Libero dignissimos est. Amet natus molestias odit minus iste quia ut. Est sit enim. Quaerat quia minima sit voluptatem dolorum veritatis est. Voluptas asperiores ab."], ["commentable_id", 8], ["commentable_type", "Question"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.248768"], ["updated_at", "2015-02-12 16:00:52.248768"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Beatae suscipit ipsa. Minima amet adipisci. Ea vel dolores deleniti. Odit repellat sequi blanditiis. Voluptatem qui perspiciatis."], ["commentable_id", 4], ["commentable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.253680"], ["updated_at", "2015-02-12 16:00:52.253680"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Earum reprehenderit omnis accusantium est. Corrupti et et quaerat et dolorem. Facere et commodi sit quia. Delectus magnam minus voluptate eos praesentium beatae vero. Laborum optio et doloremque sit delectus quas."], ["commentable_id", 4], ["commentable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.258633"], ["updated_at", "2015-02-12 16:00:52.258633"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Illo perferendis ea illum non. Natus sequi excepturi. Vero dolor laudantium voluptas consequatur. In amet ea mollitia cumque quo omnis id. Maiores quas omnis consequatur accusamus ea qui."], ["commentable_id", 10], ["commentable_type", "Answer"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.261942"], ["updated_at", "2015-02-12 16:00:52.261942"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Nesciunt omnis iste rem modi ab. Laboriosam cum ullam assumenda et nihil. Nam ut amet consectetur dolorem consequatur iusto. Eligendi blanditiis nesciunt voluptate ipsam possimus odio."], ["commentable_id", 7], ["commentable_type", "Question"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.265415"], ["updated_at", "2015-02-12 16:00:52.265415"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Vel voluptatibus veritatis ea nostrum suscipit ut voluptatum. Officiis sit sint provident ducimus. Nihil quasi qui sed pariatur ratione velit nesciunt. Itaque possimus eum nihil quaerat."], ["commentable_id", 5], ["commentable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.268727"], ["updated_at", "2015-02-12 16:00:52.268727"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Voluptas amet corporis blanditiis. Unde est neque mollitia eveniet explicabo. Velit rerum aut nesciunt numquam. Laborum dolorem tenetur aut impedit doloremque molestias."], ["commentable_id", 6], ["commentable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.272545"], ["updated_at", "2015-02-12 16:00:52.272545"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Id sed repellat. Molestias possimus rem culpa similique aliquam deserunt vel. Sed tempore velit totam et et sequi."], ["commentable_id", 6], ["commentable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.274577"], ["updated_at", "2015-02-12 16:00:52.274577"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Reiciendis rerum tempora alias nisi consectetur minima. Iure distinctio reiciendis et sint necessitatibus perspiciatis. Rerum ut non velit aperiam corrupti."], ["commentable_id", 6], ["commentable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.277166"], ["updated_at", "2015-02-12 16:00:52.277166"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Vel corrupti eaque est reiciendis. Sed qui incidunt aut. Eum non omnis saepe qui. Possimus facere illum excepturi quis molestias. Ipsa id et dolorem officiis."], ["commentable_id", 3], ["commentable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.280968"], ["updated_at", "2015-02-12 16:00:52.280968"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.8ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Necessitatibus ratione quaerat illum perspiciatis est sed commodi. Eum enim id dolor ut. Corrupti vero quas ipsa doloremque eaque nisi quam."], ["commentable_id", 6], ["commentable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.284796"], ["updated_at", "2015-02-12 16:00:52.284796"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Saepe eius harum reprehenderit. Commodi qui voluptates minima sit reprehenderit. Dolor voluptate et perspiciatis reiciendis porro vel distinctio. Aliquam omnis nemo quis quia vero occaecati."], ["commentable_id", 5], ["commentable_type", "Answer"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.292127"], ["updated_at", "2015-02-12 16:00:52.292127"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Rem autem amet enim eos soluta sapiente nemo. Atque qui nobis et natus eligendi dolorum. Molestiae delectus a aliquid accusamus nemo sunt. Architecto odit sapiente tempore."], ["commentable_id", 8], ["commentable_type", "Answer"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.295502"], ["updated_at", "2015-02-12 16:00:52.295502"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Et non distinctio velit nihil harum quaerat natus. Asperiores libero sit. Excepturi rem quam qui. Ut aperiam dignissimos ea. Quisquam facilis rem."], ["commentable_id", 5], ["commentable_type", "Question"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.299545"], ["updated_at", "2015-02-12 16:00:52.299545"]]
+  [1m[36m (1.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Aut assumenda similique corporis quod et. Omnis tenetur et. Enim nostrum rerum id commodi possimus."], ["commentable_id", 8], ["commentable_type", "Question"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.304629"], ["updated_at", "2015-02-12 16:00:52.304629"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.4ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Unde facilis eligendi placeat a tempora. Aut fugit quidem in suscipit rerum voluptatum vero. Qui sunt voluptatem cumque. Laboriosam delectus molestiae quia quis porro. Quam rem sit distinctio qui cupiditate."], ["commentable_id", 9], ["commentable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.307028"], ["updated_at", "2015-02-12 16:00:52.307028"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Excepturi id corporis provident fuga similique. Illo quia non. Maxime qui et dolore amet eum cum enim."], ["commentable_id", 5], ["commentable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.311190"], ["updated_at", "2015-02-12 16:00:52.311190"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Temporibus consequatur voluptas et eius vel minima. Ea quidem sed reiciendis. Laboriosam exercitationem quia quo minima corporis qui. Ex porro natus nostrum corporis. Aut dolorem et ut sunt."], ["commentable_id", 6], ["commentable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.314722"], ["updated_at", "2015-02-12 16:00:52.314722"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Aut numquam qui corporis quod. Dolores earum doloribus est. Quam eius voluptatem magni quas est pariatur. Qui voluptatem quia delectus. Veniam nisi quaerat distinctio tempore."], ["commentable_id", 6], ["commentable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.318338"], ["updated_at", "2015-02-12 16:00:52.318338"]]
+  [1m[35m (1.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Ab quia molestiae animi explicabo est minus iusto. Quidem reiciendis quas non quia voluptatem recusandae. Nam sit ut totam deleniti temporibus dolor."], ["commentable_id", 5], ["commentable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.325997"], ["updated_at", "2015-02-12 16:00:52.325997"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Quia ut enim aut expedita modi et harum. Sint reprehenderit expedita. Porro aut ea nam. Voluptas eveniet repellat ducimus ea. Odit illum repudiandae incidunt quis."], ["commentable_id", 9], ["commentable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.329596"], ["updated_at", "2015-02-12 16:00:52.329596"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Dolore est laboriosam. Aut perspiciatis tenetur provident maiores quos ut veritatis. Iure sit id accusantium. Similique ipsa facere."], ["commentable_id", 6], ["commentable_type", "Question"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.333263"], ["updated_at", "2015-02-12 16:00:52.333263"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Ut saepe est distinctio optio quae nobis qui. Veniam voluptas occaecati et nihil ea ipsa sit. Modi minus quae."], ["commentable_id", 8], ["commentable_type", "Question"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.338502"], ["updated_at", "2015-02-12 16:00:52.338502"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Quo ut unde voluptas velit et libero. Beatae voluptas dicta magnam. Enim vitae esse. Nisi veniam consequatur sed cupiditate sequi."], ["commentable_id", 8], ["commentable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.340945"], ["updated_at", "2015-02-12 16:00:52.340945"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Ut sit rerum. Laborum tempore explicabo corporis sed commodi qui at. Facere nobis sed. Debitis quis voluptatibus dignissimos illum."], ["commentable_id", 5], ["commentable_type", "Answer"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.343159"], ["updated_at", "2015-02-12 16:00:52.343159"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Consectetur voluptatem ipsam quia dolor. Aut doloremque iste laudantium qui sunt ut exercitationem. Et fugiat nihil. Et nisi velit nihil impedit numquam voluptatibus. Quasi qui esse."], ["commentable_id", 4], ["commentable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.345817"], ["updated_at", "2015-02-12 16:00:52.345817"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Quae laudantium repellendus ut officia quia aut. Quod possimus culpa numquam beatae ea nam at. Officiis sed qui cumque. Ipsa quasi velit autem dolor."], ["commentable_id", 9], ["commentable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.349526"], ["updated_at", "2015-02-12 16:00:52.349526"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Omnis vel non neque odit est reiciendis. Dolorem aut reiciendis ipsam magnam alias quia. Ex quidem similique et quis impedit dolor eos. Amet facilis sed."], ["commentable_id", 8], ["commentable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.353601"], ["updated_at", "2015-02-12 16:00:52.353601"]]
+  [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Vel eos dolorum deserunt minus culpa ab et. Dicta qui voluptatem repellendus natus ullam nam quia. Voluptatibus quasi velit quia. Dolores perspiciatis et minus aspernatur dignissimos temporibus."], ["commentable_id", 1], ["commentable_type", "Answer"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.359911"], ["updated_at", "2015-02-12 16:00:52.359911"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Cumque omnis beatae fugit voluptates odio assumenda. Unde itaque corporis rerum asperiores. Occaecati provident consequatur itaque illum soluta id. Qui aut aut ipsa provident quidem sed et."], ["commentable_id", 10], ["commentable_type", "Answer"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.363520"], ["updated_at", "2015-02-12 16:00:52.363520"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Quaerat praesentium dolores quo error quasi earum ut. Et dolore est sint. Illum fuga recusandae molestiae. Aut non nostrum consequuntur vero illum non."], ["commentable_id", 8], ["commentable_type", "Answer"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.371152"], ["updated_at", "2015-02-12 16:00:52.371152"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Nobis ut est atque nisi est. Nulla fugit deleniti amet est ullam similique. Aut dicta soluta nesciunt qui cum non quis. Eius molestiae ut accusamus quam consequatur."], ["commentable_id", 6], ["commentable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.375180"], ["updated_at", "2015-02-12 16:00:52.375180"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Voluptate nisi mollitia at facere. Voluptatem accusamus quaerat. Vel impedit ut."], ["commentable_id", 8], ["commentable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.378542"], ["updated_at", "2015-02-12 16:00:52.378542"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Ipsa corporis voluptas pariatur neque nulla consequuntur. Et ducimus est eum sit illum. Est quia repellendus magni est est in ut. Nihil rerum eum distinctio et sunt occaecati debitis. Id laudantium ad aliquam."], ["commentable_id", 4], ["commentable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.381851"], ["updated_at", "2015-02-12 16:00:52.381851"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Ipsam ea recusandae illum veniam eveniet. Voluptatem similique quia. Et est qui perferendis quisquam voluptatem."], ["commentable_id", 2], ["commentable_type", "Question"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.384592"], ["updated_at", "2015-02-12 16:00:52.384592"]]
+  [1m[35m (1.0ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Aut veritatis magni non error quo fugit. Dolorem delectus cumque dolores ratione aperiam aut laborum. Repudiandae et incidunt consequuntur cum ipsam dolorum voluptas."], ["commentable_id", 4], ["commentable_type", "Answer"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.389587"], ["updated_at", "2015-02-12 16:00:52.389587"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Magnam illo amet veritatis ducimus placeat. In dolore porro vero quibusdam. Dolor voluptatem facilis quibusdam praesentium. Consequuntur illo eum."], ["commentable_id", 10], ["commentable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.391739"], ["updated_at", "2015-02-12 16:00:52.391739"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Blanditiis excepturi et qui. Nihil ad libero quasi sint veritatis labore. Labore cupiditate vero aut nostrum dolorem. Occaecati quibusdam numquam minima minus. Minus qui laudantium consectetur quos soluta quas."], ["commentable_id", 4], ["commentable_type", "Question"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.395471"], ["updated_at", "2015-02-12 16:00:52.395471"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Sit dolores dolorum suscipit qui iusto. Distinctio vel rerum dolorum reprehenderit optio eveniet. Quos ea est atque."], ["commentable_id", 9], ["commentable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.398946"], ["updated_at", "2015-02-12 16:00:52.398946"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Maxime et molestias consequatur qui asperiores est. Cum quia natus autem praesentium nihil sed. In praesentium voluptas architecto quam qui commodi perferendis. Consequatur dolores iure voluptates. Voluptatem at velit eligendi et."], ["commentable_id", 8], ["commentable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.405072"], ["updated_at", "2015-02-12 16:00:52.405072"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Recusandae voluptatum perspiciatis. Unde dolor est. Delectus non dolorem qui."], ["commentable_id", 8], ["commentable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.408758"], ["updated_at", "2015-02-12 16:00:52.408758"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Delectus alias sed ullam ipsa hic. Voluptatem commodi eveniet quas tempore assumenda. Fuga voluptatem harum nihil. Eligendi incidunt iure. Est reiciendis fuga et rem architecto."], ["commentable_id", 3], ["commentable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.412487"], ["updated_at", "2015-02-12 16:00:52.412487"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Iure cupiditate qui id. Repellat nihil et adipisci explicabo corrupti. Quibusdam accusantium culpa. Debitis nobis laudantium ut repellat omnis reiciendis. Accusantium libero quam animi qui repudiandae."], ["commentable_id", 9], ["commentable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.415964"], ["updated_at", "2015-02-12 16:00:52.415964"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Sequi consequatur sit deserunt. Iste est molestiae cupiditate id eveniet. Minus corrupti architecto et quia rerum."], ["commentable_id", 2], ["commentable_type", "Answer"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.420303"], ["updated_at", "2015-02-12 16:00:52.420303"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Nostrum sunt odio laborum esse eaque. Consectetur aut suscipit saepe sunt odit neque fugiat. Voluptatem ipsa praesentium culpa."], ["commentable_id", 8], ["commentable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.423230"], ["updated_at", "2015-02-12 16:00:52.423230"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Dolorem quod in consequatur. Aut qui mollitia nam perspiciatis ipsum. Doloremque consequatur nihil dolor quia incidunt. Omnis voluptatem corporis delectus sit excepturi veritatis aliquam. Deserunt natus repellendus incidunt unde."], ["commentable_id", 3], ["commentable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.425501"], ["updated_at", "2015-02-12 16:00:52.425501"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Nisi at corporis neque officiis voluptatem natus alias. Odio unde ut ratione harum sint aspernatur. Dignissimos aliquam sit error dolores modi."], ["commentable_id", 10], ["commentable_type", "Answer"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.427873"], ["updated_at", "2015-02-12 16:00:52.427873"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Dolore cupiditate ut tenetur ipsam odit. Nesciunt dolorum velit nobis. Eos accusamus nam. Aspernatur in eum est omnis."], ["commentable_id", 9], ["commentable_type", "Question"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.431763"], ["updated_at", "2015-02-12 16:00:52.431763"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["content", "Sapiente quam id voluptatibus. Aut amet asperiores. Sit minima illo nihil vel id ullam consequuntur."], ["commentable_id", 5], ["commentable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.436319"], ["updated_at", "2015-02-12 16:00:52.436319"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "comments" ("content", "commentable_id", "commentable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["content", "Consequatur doloremque eum itaque sed delectus qui porro. Unde ut reprehenderit repudiandae. Culpa perspiciatis cum nobis aut perferendis rerum voluptatibus. Velit voluptatum illum."], ["commentable_id", 7], ["commentable_type", "Answer"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.442115"], ["updated_at", "2015-02-12 16:00:52.442115"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (11.1ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 2], ["votable_type", "Answer"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.458622"], ["updated_at", "2015-02-12 16:00:52.458622"]]
+  [1m[35m (1.0ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 6], ["votable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.475176"], ["updated_at", "2015-02-12 16:00:52.475176"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 3], ["votable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.478520"], ["updated_at", "2015-02-12 16:00:52.478520"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 9], ["votable_type", "Answer"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.481250"], ["updated_at", "2015-02-12 16:00:52.481250"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 9], ["votable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.484307"], ["updated_at", "2015-02-12 16:00:52.484307"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Answer"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.487564"], ["updated_at", "2015-02-12 16:00:52.487564"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 2], ["votable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.490593"], ["updated_at", "2015-02-12 16:00:52.490593"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 8], ["votable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.494143"], ["updated_at", "2015-02-12 16:00:52.494143"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 5], ["votable_type", "Answer"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.497626"], ["updated_at", "2015-02-12 16:00:52.497626"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.501049"], ["updated_at", "2015-02-12 16:00:52.501049"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 4], ["votable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.505762"], ["updated_at", "2015-02-12 16:00:52.505762"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.508978"], ["updated_at", "2015-02-12 16:00:52.508978"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 1], ["votable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.512736"], ["updated_at", "2015-02-12 16:00:52.512736"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 7], ["votable_type", "Answer"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.515551"], ["updated_at", "2015-02-12 16:00:52.515551"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 4], ["votable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.519173"], ["updated_at", "2015-02-12 16:00:52.519173"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 7], ["votable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.525163"], ["updated_at", "2015-02-12 16:00:52.525163"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 10], ["votable_type", "Answer"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.528256"], ["updated_at", "2015-02-12 16:00:52.528256"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.531131"], ["updated_at", "2015-02-12 16:00:52.531131"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 3], ["votable_type", "Answer"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.534166"], ["updated_at", "2015-02-12 16:00:52.534166"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 1], ["votable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.537967"], ["updated_at", "2015-02-12 16:00:52.537967"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 3], ["votable_type", "Answer"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.540439"], ["updated_at", "2015-02-12 16:00:52.540439"]]
+  [1m[35m (0.2ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 8], ["votable_type", "Question"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.542120"], ["updated_at", "2015-02-12 16:00:52.542120"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 5], ["votable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.544409"], ["updated_at", "2015-02-12 16:00:52.544409"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.547907"], ["updated_at", "2015-02-12 16:00:52.547907"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 1], ["votable_type", "Answer"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.551547"], ["updated_at", "2015-02-12 16:00:52.551547"]]
+  [1m[35m (0.9ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 2], ["votable_type", "Answer"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.558509"], ["updated_at", "2015-02-12 16:00:52.558509"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 6], ["votable_type", "Answer"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.561740"], ["updated_at", "2015-02-12 16:00:52.561740"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.565543"], ["updated_at", "2015-02-12 16:00:52.565543"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 2], ["votable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.571202"], ["updated_at", "2015-02-12 16:00:52.571202"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 6], ["votable_type", "Answer"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.573950"], ["updated_at", "2015-02-12 16:00:52.573950"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 9], ["votable_type", "Question"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.576663"], ["updated_at", "2015-02-12 16:00:52.576663"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 7], ["votable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.580485"], ["updated_at", "2015-02-12 16:00:52.580485"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 6], ["votable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.583859"], ["updated_at", "2015-02-12 16:00:52.583859"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 2], ["votable_type", "Question"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.590560"], ["updated_at", "2015-02-12 16:00:52.590560"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 7], ["votable_type", "Question"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.595305"], ["updated_at", "2015-02-12 16:00:52.595305"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.599132"], ["updated_at", "2015-02-12 16:00:52.599132"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 2], ["votable_type", "Question"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.607049"], ["updated_at", "2015-02-12 16:00:52.607049"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 9], ["votable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.610247"], ["updated_at", "2015-02-12 16:00:52.610247"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 3], ["votable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.613839"], ["updated_at", "2015-02-12 16:00:52.613839"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.616705"], ["updated_at", "2015-02-12 16:00:52.616705"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 9], ["votable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.621432"], ["updated_at", "2015-02-12 16:00:52.621432"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.623683"], ["updated_at", "2015-02-12 16:00:52.623683"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 3], ["votable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.628466"], ["updated_at", "2015-02-12 16:00:52.628466"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (4.5ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.633355"], ["updated_at", "2015-02-12 16:00:52.633355"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 6], ["votable_type", "Answer"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.642340"], ["updated_at", "2015-02-12 16:00:52.642340"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 2], ["votable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.647098"], ["updated_at", "2015-02-12 16:00:52.647098"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 8], ["votable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.652050"], ["updated_at", "2015-02-12 16:00:52.652050"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 6], ["votable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.657781"], ["updated_at", "2015-02-12 16:00:52.657781"]]
+  [1m[36m (1.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 8], ["votable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.663219"], ["updated_at", "2015-02-12 16:00:52.663219"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 1], ["votable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.667310"], ["updated_at", "2015-02-12 16:00:52.667310"]]
+  [1m[36m (4.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 4], ["votable_type", "Question"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.676705"], ["updated_at", "2015-02-12 16:00:52.676705"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 3], ["votable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.681054"], ["updated_at", "2015-02-12 16:00:52.681054"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 6], ["votable_type", "Question"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.686929"], ["updated_at", "2015-02-12 16:00:52.686929"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 9], ["votable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.691301"], ["updated_at", "2015-02-12 16:00:52.691301"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.8ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 1], ["votable_type", "Question"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.694662"], ["updated_at", "2015-02-12 16:00:52.694662"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.9ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 6], ["votable_type", "Question"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.699334"], ["updated_at", "2015-02-12 16:00:52.699334"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 9], ["votable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.705753"], ["updated_at", "2015-02-12 16:00:52.705753"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 9], ["votable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.713768"], ["updated_at", "2015-02-12 16:00:52.713768"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+  [1m[36mSQL (1.6ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 9], ["votable_type", "Question"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.727588"], ["updated_at", "2015-02-12 16:00:52.727588"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 6], ["votable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.733210"], ["updated_at", "2015-02-12 16:00:52.733210"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 2], ["votable_type", "Question"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.738673"], ["updated_at", "2015-02-12 16:00:52.738673"]]
+  [1m[35m (0.9ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Question"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.743435"], ["updated_at", "2015-02-12 16:00:52.743435"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 6], ["votable_type", "Answer"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.746626"], ["updated_at", "2015-02-12 16:00:52.746626"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 9], ["votable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.749516"], ["updated_at", "2015-02-12 16:00:52.749516"]]
+  [1m[36m (1.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 4], ["votable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.754132"], ["updated_at", "2015-02-12 16:00:52.754132"]]
+  [1m[35m (0.9ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.760245"], ["updated_at", "2015-02-12 16:00:52.760245"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 7], ["votable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.764611"], ["updated_at", "2015-02-12 16:00:52.764611"]]
+  [1m[35m (1.2ms)[0m  COMMIT
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 8], ["votable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.772122"], ["updated_at", "2015-02-12 16:00:52.772122"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.775425"], ["updated_at", "2015-02-12 16:00:52.775425"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 7], ["votable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.779192"], ["updated_at", "2015-02-12 16:00:52.779192"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 5], ["votable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.782383"], ["updated_at", "2015-02-12 16:00:52.782383"]]
+  [1m[35m (5.3ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 8], ["votable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.791401"], ["updated_at", "2015-02-12 16:00:52.791401"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 5], ["votable_type", "Answer"], ["user_id", 10], ["created_at", "2015-02-12 16:00:52.795351"], ["updated_at", "2015-02-12 16:00:52.795351"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 1], ["votable_type", "Question"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.800174"], ["updated_at", "2015-02-12 16:00:52.800174"]]
+  [1m[36m (1.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.807023"], ["updated_at", "2015-02-12 16:00:52.807023"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (2.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.813407"], ["updated_at", "2015-02-12 16:00:52.813407"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.6ms)[0m  BEGIN
+  [1m[36mSQL (2.0ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 2], ["votable_type", "Question"], ["user_id", 7], ["created_at", "2015-02-12 16:00:52.819967"], ["updated_at", "2015-02-12 16:00:52.819967"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Answer"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.829076"], ["updated_at", "2015-02-12 16:00:52.829076"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (2.5ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 3], ["votable_type", "Question"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.833368"], ["updated_at", "2015-02-12 16:00:52.833368"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 2], ["votable_type", "Question"], ["user_id", 9], ["created_at", "2015-02-12 16:00:52.840710"], ["updated_at", "2015-02-12 16:00:52.840710"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 3], ["votable_type", "Question"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.842700"], ["updated_at", "2015-02-12 16:00:52.842700"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (4.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 1], ["votable_type", "Question"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.849123"], ["updated_at", "2015-02-12 16:00:52.849123"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 5], ["votable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.853641"], ["updated_at", "2015-02-12 16:00:52.853641"]]
+  [1m[35m (1.3ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 1], ["votable_type", "Answer"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.861809"], ["updated_at", "2015-02-12 16:00:52.861809"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 6], ["votable_type", "Answer"], ["user_id", 5], ["created_at", "2015-02-12 16:00:52.865189"], ["updated_at", "2015-02-12 16:00:52.865189"]]
+  [1m[35m (1.1ms)[0m  COMMIT
+  [1m[36m (1.6ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 2], ["votable_type", "Answer"], ["user_id", 6], ["created_at", "2015-02-12 16:00:52.872747"], ["updated_at", "2015-02-12 16:00:52.872747"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 10], ["votable_type", "Answer"], ["user_id", 8], ["created_at", "2015-02-12 16:00:52.877457"], ["updated_at", "2015-02-12 16:00:52.877457"]]
+  [1m[35m (1.6ms)[0m  COMMIT
+  [1m[36m (5.9ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 7], ["votable_type", "Question"], ["user_id", 3], ["created_at", "2015-02-12 16:00:52.891106"], ["updated_at", "2015-02-12 16:00:52.891106"]]
+  [1m[36m (1.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 1], ["votable_type", "Answer"], ["user_id", 2], ["created_at", "2015-02-12 16:00:52.897312"], ["updated_at", "2015-02-12 16:00:52.897312"]]
+  [1m[35m (7.3ms)[0m  COMMIT
+  [1m[36m (13.9ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (17.7ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 6], ["votable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:52.956956"], ["updated_at", "2015-02-12 16:00:52.956956"]]
+  [1m[36m (6.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (5.1ms)[0m  BEGIN
+  [1m[36mSQL (8.5ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 1], ["votable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:52.991998"], ["updated_at", "2015-02-12 16:00:52.991998"]]
+  [1m[35m (3.4ms)[0m  COMMIT
+  [1m[36m (4.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (3.5ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 10], ["votable_type", "Answer"], ["user_id", 9], ["created_at", "2015-02-12 16:00:53.011826"], ["updated_at", "2015-02-12 16:00:53.011826"]]
+  [1m[36m (6.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (5.4ms)[0m  BEGIN
+  [1m[36mSQL (1.7ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 3], ["votable_type", "Answer"], ["user_id", 3], ["created_at", "2015-02-12 16:00:53.030148"], ["updated_at", "2015-02-12 16:00:53.030148"]]
+  [1m[35m (3.8ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 10], ["votable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:53.040625"], ["updated_at", "2015-02-12 16:00:53.040625"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 5], ["votable_type", "Answer"], ["user_id", 7], ["created_at", "2015-02-12 16:00:53.044682"], ["updated_at", "2015-02-12 16:00:53.044682"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 4], ["votable_type", "Question"], ["user_id", 6], ["created_at", "2015-02-12 16:00:53.048908"], ["updated_at", "2015-02-12 16:00:53.048908"]]
+  [1m[36m (2.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 4], ["votable_type", "Answer"], ["user_id", 7], ["created_at", "2015-02-12 16:00:53.058887"], ["updated_at", "2015-02-12 16:00:53.058887"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 9], ["votable_type", "Answer"], ["user_id", 1], ["created_at", "2015-02-12 16:00:53.063184"], ["updated_at", "2015-02-12 16:00:53.063184"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 6], ["votable_type", "Answer"], ["user_id", 4], ["created_at", "2015-02-12 16:00:53.066779"], ["updated_at", "2015-02-12 16:00:53.066779"]]
+  [1m[35m (1.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 5], ["votable_type", "Question"], ["user_id", 7], ["created_at", "2015-02-12 16:00:53.072155"], ["updated_at", "2015-02-12 16:00:53.072155"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+
+
+Started GET "/" for ::1 at 2015-02-12 11:01:27 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (2.3ms)
+  Rendered layouts/_login_bar.html.erb (4.7ms)
+  Rendered layouts/_navbar.html.erb (11.6ms)
+Completed 200 OK in 6891ms (Views: 6877.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/affix-31984abe1036c1c2f684af192191ce9f.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/button-98bba85be4dcdd597554e0b7ce8e33a2.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/carousel-93f34f850a932957c93b7605c79faf45.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/alert-7c03e11fecf6b3ef100f76ae4f08586e.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/application-b4e391deb0368c6a7dcd984e9ee7258d.css?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/collapse-7a82a3d4fb154ded3d2702465e21ca00.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/dropdown-65c3929585250221f53bae696936ed44.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/tab-a90a1841af8c1eae12bfa5283a8093b0.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/transition-9e4de96204f41141474e9dbb59570af9.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/scrollspy-e550695030be1d627d1ba91b14792316.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/modal-ce380b9327d2cf6c826d8df818ea48a1.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/tooltip-4d90d4ee015d2df34a7696864b2ea83c.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap-sprockets-00b1738c651720f44abc4bbf70bedb3e.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/turbolinks-da8ddad9c2c5483d4c5c30c1ce325253.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/bootstrap/popover-5a060f876311e7fcb18f35058070de5a.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/assets/application-d4403ce6e4bec3e23951fca85bde243f.js?body=1" for ::1 at 2015-02-12 11:01:35 -0500
+
+
+Started GET "/users/new" for ::1 at 2015-02-12 11:01:44 -0500
+Processing by UsersController#new as HTML
+  Parameters: {"authenticity_token"=>"isHnGupIDsRCXFsC/4evAxDpxj+ynyZKfw4IiFTpzuy+4E+i9YcRzi5ye5jYEqIsWAKoRBBZcb4BFqTyyv41ig=="}
+  Rendered users/new.html.erb within layouts/application (36.7ms)
+  Rendered layouts/_login_bar.html.erb (1.7ms)
+  Rendered layouts/_navbar.html.erb (4.2ms)
+Completed 200 OK in 234ms (Views: 201.0ms | ActiveRecord: 3.0ms)
+
+
+Started POST "/users" for ::1 at 2015-02-12 11:01:55 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"sSpH114/+CxRjsplFb39Mas0TgDyWvIiNDIPxaxP3QSFC+9vQfDnJj2g6v8yKPAe498ge1CcpdZKKqO/MlgmYg==", "user"=>{"name"=>"foo", "email"=>"foo@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "foo@example.com"], ["name", "foo"], ["password_digest", "$2a$10$3sYUv4LzdiDInjn6Nc9GQeB9eWHmpCAx0TnomTkrtHVam5IDhozmm"], ["created_at", "2015-02-12 16:01:55.548409"], ["updated_at", "2015-02-12 16:01:55.548409"]]
+  [1m[35m (6.1ms)[0m  COMMIT
+Redirected to http://localhost:4001/users/11
+Completed 302 Found in 126ms (ActiveRecord: 8.5ms)
+
+
+Started GET "/users/11" for ::1 at 2015-02-12 11:01:55 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 11]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mQuestion Load (0.8ms)[0m  SELECT "questions".* FROM "questions" WHERE "questions"."user_id" = $1  [["user_id", 11]]
+  Rendered users/show.html.erb within layouts/application (58.7ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 11]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  Rendered layouts/_login_bar.html.erb (3.5ms)
+  Rendered layouts/_navbar.html.erb (5.5ms)
+Completed 200 OK in 228ms (Views: 191.8ms | ActiveRecord: 9.0ms)
+
+
+Started DELETE "/users/11" for ::1 at 2015-02-12 11:02:04 -0500
+Processing by UsersController#destroy as HTML
+  Parameters: {"authenticity_token"=>"FxS/z+QYFaU4fKmBWvT6fol0Z3Se8DiSCFtvvZ8g2xgjNRd3+9cKr1RSiRt9YfdRwZ8JDzw2b2Z2Q8PHATcgfg==", "id"=>"11"}
+  [1m[35mUser Load (1.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 11]]
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 11]]
+  [1m[36m (5.9ms)[0m  [1mCOMMIT[0m
+Redirected to http://localhost:4001/users
+Completed 302 Found in 31ms (ActiveRecord: 7.9ms)
+
+
+Started GET "/users" for ::1 at 2015-02-12 11:02:04 -0500
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users"
+  Rendered users/index.html.erb within layouts/application (2.7ms)
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  Rendered layouts/_login_bar.html.erb (8.7ms)
+  Rendered layouts/_navbar.html.erb (10.9ms)
+Completed 500 Internal Server Error in 301ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=11):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (14.0ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (4.9ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (2.1ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (73.5ms)
+
+
+Started GET "/users/11" for ::1 at 2015-02-12 11:02:18 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 11]]
+Completed 404 Not Found in 3ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=11):
+  app/controllers/users_controller.rb:46:in `set_user'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (5.5ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (2.3ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.0ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (34.1ms)
+
+
+Started GET "/users/new" for ::1 at 2015-02-12 11:02:21 -0500
+Processing by UsersController#new as HTML
+  Rendered users/new.html.erb within layouts/application (2.2ms)
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  Rendered layouts/_login_bar.html.erb (4.0ms)
+  Rendered layouts/_navbar.html.erb (5.4ms)
+Completed 500 Internal Server Error in 213ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=11):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (9.5ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (3.5ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.4ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (39.1ms)
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:02:25 -0500
+Processing by SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"isHnGupIDsRCXFsC/4evAxDpxj+ynyZKfw4IiFTpzuy+4E+i9YcRzi5ye5jYEqIsWAKoRBBZcb4BFqTyyv41ig=="}
+  Rendered sessions/login.html.erb within layouts/application (15.7ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 11]]
+  Rendered layouts/_login_bar.html.erb (4.9ms)
+  Rendered layouts/_navbar.html.erb (6.3ms)
+Completed 500 Internal Server Error in 227ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=11):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+  app/controllers/sessions_controller.rb:17:in `new'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (12.0ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (6.1ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (2.0ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (39.3ms)
+
+
+Started GET "/" for ::1 at 2015-02-12 11:02:36 -0500
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (0.3ms)
+  Rendered layouts/_login_bar.html.erb (1.8ms)
+  Rendered layouts/_navbar.html.erb (6.2ms)
+Completed 200 OK in 227ms (Views: 226.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/application-b4e391deb0368c6a7dcd984e9ee7258d.css?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/affix-31984abe1036c1c2f684af192191ce9f.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/button-98bba85be4dcdd597554e0b7ce8e33a2.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/carousel-93f34f850a932957c93b7605c79faf45.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/alert-7c03e11fecf6b3ef100f76ae4f08586e.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/collapse-7a82a3d4fb154ded3d2702465e21ca00.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/scrollspy-e550695030be1d627d1ba91b14792316.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/tab-a90a1841af8c1eae12bfa5283a8093b0.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/modal-ce380b9327d2cf6c826d8df818ea48a1.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/transition-9e4de96204f41141474e9dbb59570af9.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/tooltip-4d90d4ee015d2df34a7696864b2ea83c.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/dropdown-65c3929585250221f53bae696936ed44.js?body=1" for ::1 at 2015-02-12 11:02:36 -0500
+
+
+Started GET "/assets/bootstrap/popover-5a060f876311e7fcb18f35058070de5a.js?body=1" for ::1 at 2015-02-12 11:02:37 -0500
+
+
+Started GET "/assets/bootstrap-sprockets-00b1738c651720f44abc4bbf70bedb3e.js?body=1" for ::1 at 2015-02-12 11:02:37 -0500
+
+
+Started GET "/assets/application-d4403ce6e4bec3e23951fca85bde243f.js?body=1" for ::1 at 2015-02-12 11:02:37 -0500
+
+
+Started GET "/assets/turbolinks-da8ddad9c2c5483d4c5c30c1ce325253.js?body=1" for ::1 at 2015-02-12 11:02:37 -0500
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-02-12 11:02:37 -0500
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:02:39 -0500
+Processing by SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"k+elFTsQvb5YjUElGvkPnken14Uy/TT7lwLaU69zfGF7fx7JBh/2d6TxzW8xO07MKaReNf76LMdgAAn9eyAE7Q=="}
+  Rendered sessions/login.html.erb within layouts/application (3.8ms)
+  Rendered layouts/_login_bar.html.erb (0.5ms)
+  Rendered layouts/_navbar.html.erb (2.1ms)
+Completed 200 OK in 290ms (Views: 289.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/login" for ::1 at 2015-02-12 11:02:45 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"pqj+jCpBGx2mMr82rJGLa+Yb/uRlWabtWyDS64R+tBdOMEVQF05Q1FpOM3yHU8o5iBh3VKlevtGsIgFFUC3Mmw==", "/login"=>{"email"=>"foo@example.com", "password"=>"[FILTERED]"}, "commit"=>"Save /login"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Redirected to http://localhost:4001/login
+Completed 302 Found in 4ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:02:45 -0500
+Processing by SessionsController#new as HTML
+  Rendered sessions/login.html.erb within layouts/application (3.3ms)
+  Rendered layouts/_login_bar.html.erb (0.5ms)
+  Rendered layouts/_navbar.html.erb (1.4ms)
+Completed 200 OK in 159ms (Views: 157.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:03:46 -0500
+Processing by SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"DhjMiqPu+14aNUkgJokxrvdGm3uPm7C7O1Iyxe1JtOHmgHdWnuGwl+ZJxWoNS3D8mUUSy0OcqIfMUOFrORrMbQ=="}
+  Rendered sessions/login.html.erb within layouts/application (14.5ms)
+  Rendered layouts/_login_bar.html.erb (1.9ms)
+  Rendered layouts/_navbar.html.erb (5.6ms)
+Completed 200 OK in 985ms (Views: 983.3ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (1.5ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" DESC LIMIT 1[0m
+
+
+Started GET "/users/new" for ::1 at 2015-02-12 11:04:02 -0500
+Processing by UsersController#new as HTML
+  Parameters: {"authenticity_token"=>"QDjAHEzwuHDDaqVsE6RKssnUgvMleNrrRYX/wa6OeyyooHvAcf/zuT8WKSY4Zgvgp9cLQ+l/wteyhyxvet0DoA=="}
+  Rendered users/new.html.erb within layouts/application (10.3ms)
+  Rendered layouts/_login_bar.html.erb (0.4ms)
+  Rendered layouts/_navbar.html.erb (2.8ms)
+Completed 200 OK in 859ms (Views: 857.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for ::1 at 2015-02-12 11:04:08 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"xTR8L99V9iphpygdLvWNCZyj3zmESFEut7gpJNQIMDYtrMfz4lq9453bpFcFN8xb8qBWiUhPSRJAuvqKAFtIug==", "user"=>{"name"=>"foo", "email"=>"foo@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.7ms)[0m  BEGIN
+  [1m[36mSQL (0.8ms)[0m  [1mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "foo@example.com"], ["name", "foo"], ["password_digest", "$2a$10$tksogG2fU5FFgsC8EP1aru4kZFnzd.2n1ciThgADy/SgQpu9rZY.W"], ["created_at", "2015-02-12 16:04:08.739577"], ["updated_at", "2015-02-12 16:04:08.739577"]]
+  [1m[35m (1.4ms)[0m  COMMIT
+Redirected to http://localhost:4001/users/12
+Completed 302 Found in 93ms (ActiveRecord: 2.9ms)
+
+
+Started GET "/users/12" for ::1 at 2015-02-12 11:04:08 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 12]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  [1m[35mQuestion Load (0.4ms)[0m  SELECT "questions".* FROM "questions" WHERE "questions"."user_id" = $1  [["user_id", 12]]
+  Rendered users/show.html.erb within layouts/application (3.7ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 12]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  Rendered layouts/_login_bar.html.erb (1.6ms)
+  Rendered layouts/_navbar.html.erb (3.1ms)
+Completed 200 OK in 245ms (Views: 242.8ms | ActiveRecord: 1.1ms)
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  ORDER BY "users"."id" DESC LIMIT 1
+
+
+Started POST "/logout" for ::1 at 2015-02-12 11:04:22 -0500
+Processing by SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"7XujpIouAOVsj68CwOF+R4gJYhFRL4Nivlzju8uHEi0F4xh4tyFLLJDzI0jrIz8V5grroZ0om15JXjAVH9RqoQ=="}
+Redirected to http://localhost:4001/
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-02-12 11:04:22 -0500
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (0.1ms)
+  Rendered layouts/_login_bar.html.erb (0.5ms)
+  Rendered layouts/_navbar.html.erb (2.4ms)
+Completed 200 OK in 350ms (Views: 348.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:04:23 -0500
+Processing by SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"V8XRoK92b0qTtFYtK8hCgQoESRBiJ/t/pBmC+wMfvaS/XWp8knkkg2/I2mcACgPTZAfAoK4g40NTG1FV10zFKA=="}
+  Rendered sessions/login.html.erb within layouts/application (3.5ms)
+  Rendered layouts/_login_bar.html.erb (0.3ms)
+  Rendered layouts/_navbar.html.erb (1.3ms)
+Completed 200 OK in 311ms (Views: 310.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/login" for ::1 at 2015-02-12 11:04:28 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"WcLVQwhLT5XHD34pr2I7VM/odAcUdvIK9+n6wxelAXCxWm6fNUQEXDtz8mOEoHoGoev9t9hx6jYA6yltw/Z5/A==", "/login"=>{"email"=>"foo@example.com", "password"=>"[FILTERED]"}, "commit"=>"Save /login"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT "users".* FROM "users"
+Redirected to http://localhost:4001/users/12
+Completed 302 Found in 101ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/users/12" for ::1 at 2015-02-12 11:04:28 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 12]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  [1m[35mQuestion Load (0.3ms)[0m  SELECT "questions".* FROM "questions" WHERE "questions"."user_id" = $1  [["user_id", 12]]
+  Rendered users/show.html.erb within layouts/application (2.6ms)
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 12]]
+  [1m[36mCACHE (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  Rendered layouts/_login_bar.html.erb (4.7ms)
+  Rendered layouts/_navbar.html.erb (6.6ms)
+Completed 200 OK in 271ms (Views: 268.6ms | ActiveRecord: 1.1ms)
+
+
+Started DELETE "/users/12" for ::1 at 2015-02-12 11:04:31 -0500
+Processing by UsersController#destroy as HTML
+  Parameters: {"authenticity_token"=>"QEh3GIcMPSOKy/urieiBEpr334om70otRfn4VTrBJwOo0MzEugN26na3d+GiKsBA9PRWOuroUhGy+yv77pJfjw==", "id"=>"12"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 12]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  DELETE FROM "users" WHERE "users"."id" = $1  [["id", 12]]
+  [1m[36m (6.1ms)[0m  [1mCOMMIT[0m
+Redirected to http://localhost:4001/users
+Completed 302 Found in 13ms (ActiveRecord: 7.3ms)
+
+
+Started GET "/users" for ::1 at 2015-02-12 11:04:31 -0500
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT "users".* FROM "users"
+  Rendered users/index.html.erb within layouts/application (3.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  Rendered layouts/_login_bar.html.erb (7.5ms)
+  Rendered layouts/_navbar.html.erb (8.7ms)
+Completed 500 Internal Server Error in 256ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=12):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (12.7ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (4.4ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.3ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (40.2ms)
+
+
+Started GET "/users/12" for ::1 at 2015-02-12 11:04:36 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 12]]
+Completed 404 Not Found in 2ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=12):
+  app/controllers/users_controller.rb:46:in `set_user'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (11.3ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (2.6ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.4ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (35.7ms)
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:04:41 -0500
+Processing by SessionsController#new as HTML
+  Rendered sessions/login.html.erb within layouts/application (5.3ms)
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  Rendered layouts/_login_bar.html.erb (6.6ms)
+  Rendered layouts/_navbar.html.erb (8.6ms)
+Completed 500 Internal Server Error in 221ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=12):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+  app/controllers/sessions_controller.rb:17:in `new'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (10.4ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (5.0ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.1ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (34.7ms)
+
+
+Started GET "/" for ::1 at 2015-02-12 11:04:45 -0500
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (0.1ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 12]]
+  Rendered layouts/_login_bar.html.erb (3.3ms)
+  Rendered layouts/_navbar.html.erb (4.5ms)
+Completed 500 Internal Server Error in 167ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=12):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (13.1ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (3.3ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.3ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (36.5ms)
+
+
+Started GET "/users/new" for ::1 at 2015-02-12 11:04:49 -0500
+Processing by UsersController#new as HTML
+  Rendered users/new.html.erb within layouts/application (3.3ms)
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  Rendered layouts/_login_bar.html.erb (3.9ms)
+  Rendered layouts/_navbar.html.erb (7.1ms)
+Completed 500 Internal Server Error in 227ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=12):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (12.3ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (4.1ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.1ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (35.0ms)
+
+
+Started GET "/" for ::1 at 2015-02-12 11:05:01 -0500
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (0.1ms)
+  [1m[35mUser Load (0.8ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 12]]
+  Rendered layouts/_login_bar.html.erb (8.0ms)
+  Rendered layouts/_navbar.html.erb (10.5ms)
+Completed 500 Internal Server Error in 236ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=12):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (11.8ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (3.1ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.2ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (35.1ms)
+
+
+Started GET "/" for ::1 at 2015-02-12 11:05:19 -0500
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (0.2ms)
+  [1m[36mUser Load (0.9ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 12]]
+  Rendered layouts/_login_bar.html.erb (7.8ms)
+  Rendered layouts/_navbar.html.erb (9.8ms)
+Completed 500 Internal Server Error in 223ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=12):
+  app/controllers/application_controller.rb:8:in `current_user'
+  app/views/layouts/_login_bar.html.erb:1:in `_app_views_layouts__login_bar_html_erb__1394227312799963348_70322393990880'
+  app/views/layouts/_navbar.html.erb:2:in `_app_views_layouts__navbar_html_erb__3674232067222661312_70322393976660'
+  app/views/layouts/application.html.erb:12:in `_app_views_layouts_application_html_erb___619985374367462155_70322317182940'
+
+
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_source.erb (13.5ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_trace.html.erb (4.8ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/_web_console.html.erb (1.6ms)
+  Rendered /Users/sgharms/.gem/ruby/2.1.2/gems/web-console-2.0.0/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (46.4ms)
+
+
+Started GET "/" for ::1 at 2015-02-12 11:05:26 -0500
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (0.3ms)
+  Rendered layouts/_login_bar.html.erb (0.9ms)
+  Rendered layouts/_navbar.html.erb (2.4ms)
+Completed 200 OK in 189ms (Views: 188.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/application-b4e391deb0368c6a7dcd984e9ee7258d.css?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/affix-31984abe1036c1c2f684af192191ce9f.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/button-98bba85be4dcdd597554e0b7ce8e33a2.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/carousel-93f34f850a932957c93b7605c79faf45.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/alert-7c03e11fecf6b3ef100f76ae4f08586e.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/collapse-7a82a3d4fb154ded3d2702465e21ca00.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/dropdown-65c3929585250221f53bae696936ed44.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/tab-a90a1841af8c1eae12bfa5283a8093b0.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/transition-9e4de96204f41141474e9dbb59570af9.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/scrollspy-e550695030be1d627d1ba91b14792316.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/modal-ce380b9327d2cf6c826d8df818ea48a1.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap/tooltip-4d90d4ee015d2df34a7696864b2ea83c.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/bootstrap-sprockets-00b1738c651720f44abc4bbf70bedb3e.js?body=1" for ::1 at 2015-02-12 11:05:26 -0500
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-02-12 11:05:27 -0500
+
+
+Started GET "/assets/bootstrap/popover-5a060f876311e7fcb18f35058070de5a.js?body=1" for ::1 at 2015-02-12 11:05:27 -0500
+
+
+Started GET "/assets/application-d4403ce6e4bec3e23951fca85bde243f.js?body=1" for ::1 at 2015-02-12 11:05:27 -0500
+
+
+Started GET "/assets/turbolinks-da8ddad9c2c5483d4c5c30c1ce325253.js?body=1" for ::1 at 2015-02-12 11:05:27 -0500
+
+
+Started GET "/" for ::1 at 2015-02-12 11:07:14 -0500
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_login_bar.html.erb (0.7ms)
+  Rendered layouts/_navbar.html.erb (2.7ms)
+Completed 200 OK in 321ms (Views: 318.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:07:17 -0500
+Processing by SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"YrMd7dJkVU1/cJmK5KwOYO8f4IK3m8SZS9MBivdb0L6oqN+II6+9s+alloRXqMOVb9tZ0rYqKntkRq6lNHTjSQ=="}
+  Rendered sessions/login.html.erb within layouts/application (8.8ms)
+  Rendered layouts/_login_bar.html.erb (0.5ms)
+  Rendered layouts/_navbar.html.erb (2.2ms)
+Completed 200 OK in 282ms (Views: 281.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/login" for ::1 at 2015-02-12 11:07:22 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"NfKmzDY0/UTzk6fKp29iGqm2hlNAdddXnZ3gKU5q+Bv/6WSpx/8VumpGqMQUa6/vKXI/A0HEObWyCE8GjUXL7A==", "/login"=>{"email"=>"foo@example.com", "password"=>"[FILTERED]"}, "commit"=>"Save /login"}
+  [1m[35mUser Load (0.8ms)[0m  SELECT "users".* FROM "users"
+Redirected to http://localhost:4001/login
+Completed 302 Found in 6ms (ActiveRecord: 0.8ms)
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:07:22 -0500
+Processing by SessionsController#new as HTML
+  Rendered sessions/login.html.erb within layouts/application (5.0ms)
+  Rendered layouts/_login_bar.html.erb (0.2ms)
+  Rendered layouts/_navbar.html.erb (2.0ms)
+Completed 200 OK in 339ms (Views: 338.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/login" for ::1 at 2015-02-12 11:07:30 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"MmdVKaIas6SgF+lI78wAJSxjzuTDnAu5ZRQri53XiHX4fJdMU9FbWjnC5kZcyM3QrKd3tMIt5VtKgYSkXvi7gg==", "/login"=>{"email"=>"foo@example.com", "password"=>"[FILTERED]"}, "commit"=>"Save /login"}
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Redirected to http://localhost:4001/login
+Completed 302 Found in 4ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/login" for ::1 at 2015-02-12 11:07:30 -0500
+Processing by SessionsController#new as HTML
+  Rendered sessions/login.html.erb within layouts/application (4.4ms)
+  Rendered layouts/_login_bar.html.erb (0.4ms)
+  Rendered layouts/_navbar.html.erb (1.6ms)
+Completed 200 OK in 207ms (Views: 206.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/new" for ::1 at 2015-02-12 11:07:58 -0500
+Processing by UsersController#new as HTML
+  Parameters: {"authenticity_token"=>"FKJYnGFLYBOaxbeWfutyKO5G8Un9dOTc29Vn1ZEZnr7euZr5kICI7QMQuJjN77/dboJIGfzFCj70QMj6UjatSQ=="}
+  Rendered users/new.html.erb within layouts/application (12.2ms)
+  Rendered layouts/_login_bar.html.erb (0.4ms)
+  Rendered layouts/_navbar.html.erb (2.3ms)
+Completed 200 OK in 338ms (Views: 336.3ms | ActiveRecord: 0.0ms)
+  [1m[36mUser Load (1.7ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" DESC LIMIT 1[0m
+
+
+Started GET "/users/new" for ::1 at 2015-02-12 11:08:18 -0500
+Processing by UsersController#new as HTML
+  Parameters: {"authenticity_token"=>"gWr2S1BAp+/991pk7nkZ9E6AWv5oJkiEYSYYCIpdFktLcTQuoYtPEWQiVWpdfdQBzkTjrmmXpmZOs7cnSXIlvA=="}
+  Rendered users/new.html.erb within layouts/application (3.5ms)
+  Rendered layouts/_login_bar.html.erb (0.3ms)
+  Rendered layouts/_navbar.html.erb (8.5ms)
+Completed 200 OK in 358ms (Views: 356.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for ::1 at 2015-02-12 11:08:24 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"cpHvNyQIyaOtU39F0R3s8A9iGquRaSfE3sY4eH+54DS4ii1S1cMhXTSGcEtiGSEFj6aj+5DYySbxU5dXvJbTww==", "user"=>{"name"=>"foo", "email"=>"foo@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "foo@example.com"], ["name", "foo"], ["password_digest", "$2a$10$AWLtXn3vxW85cAdy85fo9ufYZZAs/h1jGNpDBlOtxjEHk8g3U1Xiu"], ["created_at", "2015-02-12 16:08:24.205512"], ["updated_at", "2015-02-12 16:08:24.205512"]]
+  [1m[35m (2.4ms)[0m  COMMIT
+Redirected to http://localhost:4001/users/13
+Completed 302 Found in 96ms (ActiveRecord: 3.7ms)
+
+
+Started GET "/users/13" for ::1 at 2015-02-12 11:08:24 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"13"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mQuestion Load (0.5ms)[0m  SELECT "questions".* FROM "questions" WHERE "questions"."user_id" = $1  [["user_id", 13]]
+  Rendered users/show.html.erb within layouts/application (3.7ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (1.8ms)
+  Rendered layouts/_navbar.html.erb (2.9ms)
+Completed 200 OK in 205ms (Views: 201.3ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/users/13/edit" for ::1 at 2015-02-12 11:08:40 -0500
+Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"13"}
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered users/edit.html.erb within layouts/application (8.4ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (5.3ms)
+  Rendered layouts/_navbar.html.erb (9.7ms)
+Completed 200 OK in 236ms (Views: 232.1ms | ActiveRecord: 1.4ms)
+
+
+Started PATCH "/users/13" for ::1 at 2015-02-12 11:08:47 -0500
+Processing by UsersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"hyLHVJcZQEOf6arNdQ8Iv/uX4gKqo+M1+PHswgDW8EdNOQUxZtKovQY8pcPGC8VKe1NbUqsSDdfXZEPtw/nDsA==", "user"=>{"name"=>"Mr. Foo, Esq.", "email"=>"foo@example.com", "pic_url"=>""}, "commit"=>"Update User", "id"=>"13"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  UPDATE "users" SET "name" = $1, "pic_url" = $2, "updated_at" = $3 WHERE "users"."id" = $4  [["name", "Mr. Foo, Esq."], ["pic_url", ""], ["updated_at", "2015-02-12 16:08:47.838797"], ["id", 13]]
+  [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+Redirected to http://localhost:4001/users/13
+Completed 302 Found in 16ms (ActiveRecord: 2.0ms)
+
+
+Started GET "/users/13" for ::1 at 2015-02-12 11:08:47 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"13"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mQuestion Load (0.6ms)[0m  [1mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" = $1[0m  [["user_id", 13]]
+  Rendered users/show.html.erb within layouts/application (4.6ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (1.0ms)
+  Rendered layouts/_navbar.html.erb (2.1ms)
+Completed 200 OK in 282ms (Views: 278.3ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/questions/new" for ::1 at 2015-02-12 11:09:30 -0500
+Processing by QuestionsController#new as HTML
+  Parameters: {"authenticity_token"=>"6T14BXZHM/bWcYn0k7sEdd4dSVSSjWerYgK92uBj0g4jJrpgh4zbCE+khvogv8mAXtnwBJM8iUlNlxL1I0zh+Q=="}
+  [1m[36mUser Load (3.6ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered questions/new.html.erb within layouts/application (27.5ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (79.4ms)
+  Rendered layouts/_navbar.html.erb (84.0ms)
+Completed 200 OK in 853ms (Views: 790.1ms | ActiveRecord: 10.2ms)
+
+
+Started POST "/questions" for ::1 at 2015-02-12 11:09:43 -0500
+Processing by QuestionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"u8vRhiBELvIEYKuWdEjZf1D2E+GiqbBn3qw02uuJ2Stx0BPj0Y/GDJ21pJjHTBSK0DKqsaMYXoXxOZv1KKbq3A==", "question"=>{"title"=>"Kraft or ronzoni", "prompt"=>"you know the big two!"}, "commit"=>"Create Question"}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (16.4ms)[0m  [1mINSERT INTO "questions" ("title", "prompt", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Kraft or ronzoni"], ["prompt", "you know the big two!"], ["user_id", 13], ["created_at", "2015-02-12 16:09:43.348168"], ["updated_at", "2015-02-12 16:09:43.348168"]]
+  [1m[35m (1.4ms)[0m  COMMIT
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+Redirected to http://localhost:4001/users/13
+Completed 302 Found in 48ms (ActiveRecord: 19.2ms)
+
+
+Started GET "/users/13" for ::1 at 2015-02-12 11:09:43 -0500
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"13"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mQuestion Load (0.8ms)[0m  [1mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" = $1[0m  [["user_id", 13]]
+  Rendered users/show.html.erb within layouts/application (4.8ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (2.6ms)
+  Rendered layouts/_navbar.html.erb (6.1ms)
+Completed 200 OK in 499ms (Views: 494.9ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/users" for ::1 at 2015-02-12 11:09:51 -0500
+Processing by UsersController#index as HTML
+  Parameters: {"authenticity_token"=>"tkdClIZul/ClrrQLofNNKL0fe9ZW6q604HbEOKYafyN8XIDxd6V/Djx7uwUS94DdPdvChldbQFbP42sXZTVM1A=="}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  Rendered users/index.html.erb within layouts/application (4.3ms)
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (2.0ms)
+  Rendered layouts/_navbar.html.erb (3.8ms)
+Completed 200 OK in 297ms (Views: 294.3ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/questions" for ::1 at 2015-02-12 11:10:09 -0500
+Processing by QuestionsController#index as HTML
+  Parameters: {"authenticity_token"=>"+dqjkq0NqkdXYZ92hlSJgVvY9zb6awtR5l13FLfAHjYzwWH3XMZCuc60kHg1UER02xxOZvva5bPJyNg7dO8twQ=="}
+  [1m[36mQuestion Load (0.5ms)[0m  [1mSELECT "questions".* FROM "questions"[0m
+  [1m[35m (0.6ms)[0m  SELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 1]]
+  [1m[36m (1.0ms)[0m  [1mSELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 2]]
+  [1m[35m (5.6ms)[0m  SELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 3]]
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 4]]
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 5]]
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 6]]
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 7]]
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 8]]
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 9]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 10]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 11]]
+  Rendered questions/index.html.erb within layouts/application (65.9ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (2.8ms)
+  Rendered layouts/_navbar.html.erb (4.4ms)
+Completed 200 OK in 270ms (Views: 254.4ms | ActiveRecord: 13.9ms)
+
+
+Started GET "/questions/11" for ::1 at 2015-02-12 11:10:15 -0500
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[35mQuestion Load (0.6ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1  [["id", 11]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mAnswer Load (0.3ms)[0m  SELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 11]]
+  Rendered answers/_show.html.erb (4.8ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (19.5ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (1.4ms)
+  Rendered layouts/_navbar.html.erb (3.6ms)
+Completed 200 OK in 296ms (Views: 288.8ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/questions/11/edit" for ::1 at 2015-02-12 11:10:19 -0500
+Processing by QuestionsController#edit as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mQuestion Load (0.4ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  Rendered questions/edit.html.erb within layouts/application (4.7ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (2.5ms)
+  Rendered layouts/_navbar.html.erb (3.7ms)
+Completed 200 OK in 395ms (Views: 392.7ms | ActiveRecord: 0.7ms)
+
+
+Started PATCH "/questions/11" for ::1 at 2015-02-12 11:10:25 -0500
+Processing by QuestionsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"hTDRsbruahxuKz27Z9xYM42RCeXiPwjlEegLIWthBPNPKxPUSyWC4vf+MrXU2JXGDVWwteOO5gc+faQOqE43BA==", "question"=>{"title"=>"Kraft or ronzoni", "prompt"=>"You know the big two!"}, "commit"=>"Update Question", "id"=>"11"}
+  [1m[36mQuestion Load (0.4ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mUPDATE "questions" SET "prompt" = $1, "updated_at" = $2 WHERE "questions"."id" = $3[0m  [["prompt", "You know the big two!"], ["updated_at", "2015-02-12 16:10:25.161285"], ["id", 11]]
+  [1m[35m (1.1ms)[0m  COMMIT
+Redirected to http://localhost:4001/questions/11
+Completed 302 Found in 14ms (ActiveRecord: 2.0ms)
+
+
+Started GET "/questions/11" for ::1 at 2015-02-12 11:10:25 -0500
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mQuestion Load (1.6ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mAnswer Load (0.3ms)[0m  [1mSELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 11]]
+  Rendered answers/_show.html.erb (3.7ms)
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (19.1ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (2.3ms)
+  Rendered layouts/_navbar.html.erb (3.3ms)
+Completed 200 OK in 269ms (Views: 262.7ms | ActiveRecord: 2.6ms)
+
+
+Started GET "/questions/11/answers/new" for ::1 at 2015-02-12 11:10:28 -0500
+Processing by AnswersController#new as HTML
+  Parameters: {"question_id"=>"11"}
+  [1m[35mQuestion Load (1.0ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1  [["id", 11]]
+  Rendered answers/_form.html.erb (4.5ms)
+  Rendered answers/new.html.erb within layouts/application (6.4ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (2.1ms)
+  Rendered layouts/_navbar.html.erb (3.3ms)
+Completed 200 OK in 175ms (Views: 164.7ms | ActiveRecord: 2.6ms)
+
+
+Started POST "/questions/11/answers" for ::1 at 2015-02-12 11:10:33 -0500
+Processing by AnswersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"SXHK0pWUzgrCAwj7Qhk4IyQNlMsQSs8TLsaBF/EBj9qDagi3ZF8m9FvWB/XxHfXWpMktmxH7IfEBUy44Mi68LQ==", "answer"=>{"content"=>"Kraft is gummy"}, "commit"=>"Create Answer", "question_id"=>"11"}
+  [1m[35mQuestion Load (0.4ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1  [["id", 11]]
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36mSQL (3.1ms)[0m  [1mINSERT INTO "answers" ("content", "user_id", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "Kraft is gummy"], ["user_id", 13], ["question_id", 11], ["created_at", "2015-02-12 16:10:33.988599"], ["updated_at", "2015-02-12 16:10:33.988599"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (3.4ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  COMMIT
+Redirected to http://localhost:4001/questions/11
+Completed 302 Found in 31ms (ActiveRecord: 9.1ms)
+
+
+Started GET "/questions/11" for ::1 at 2015-02-12 11:10:34 -0500
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mQuestion Load (0.6ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mAnswer Load (2.5ms)[0m  [1mSELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 11]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (1.8ms)[0m  [1mSELECT COUNT(*) FROM "votes" WHERE "votes"."votable_id" = $1 AND "votes"."votable_type" = $2[0m  [["votable_id", 21], ["votable_type", "Answer"]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mComment Load (1.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = $1 AND "comments"."commentable_type" = $2[0m  [["commentable_id", 21], ["commentable_type", "Answer"]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered answers/_show.html.erb (95.5ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (100.8ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (1.9ms)
+  Rendered layouts/_navbar.html.erb (3.7ms)
+Completed 200 OK in 334ms (Views: 314.4ms | ActiveRecord: 17.0ms)
+
+
+Started POST "/answers/21/votes" for ::1 at 2015-02-12 11:10:40 -0500
+Processing by VotesController#create as HTML
+  Parameters: {"authenticity_token"=>"9vORH5Lg9ynJYKypzWBEx1o1oL3v4XqwWtlER9ci8jw86FN6Yysf11C1o6d+ZIky2vEZ7e5QlFJ1TOtoFA3Byw==", "answer_id"=>"21"}
+  [1m[36mAnswer Load (0.3ms)[0m  [1mSELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1[0m  [["id", 21]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 21], ["votable_type", "Answer"], ["user_id", 13], ["created_at", "2015-02-12 16:10:40.200211"], ["updated_at", "2015-02-12 16:10:40.200211"]]
+  [1m[36m (1.4ms)[0m  [1mCOMMIT[0m
+  [1m[35mQuestion Load (0.5ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1  [["id", 11]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mAnswer Load (0.5ms)[0m  SELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 11]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "votes" WHERE "votes"."votable_id" = $1 AND "votes"."votable_type" = $2  [["votable_id", 21], ["votable_type", "Answer"]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mComment Load (0.9ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = $1 AND "comments"."commentable_type" = $2  [["commentable_id", 21], ["commentable_type", "Answer"]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered answers/_show.html.erb (14.3ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (22.0ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (1.4ms)
+  Rendered layouts/_navbar.html.erb (2.2ms)
+Completed 200 OK in 213ms (Views: 191.5ms | ActiveRecord: 6.6ms)
+
+
+Started POST "/answers/21/votes.101" for ::1 at 2015-02-12 11:10:42 -0500
+Processing by VotesController#create as 
+  Parameters: {"authenticity_token"=>"qjhxLpI83zjqavicZxhsS3kXUuX27XAlw0g7/Njh/pNgI7NLY/c3xnO/95LUHKG++dPrtfdcnsfs3ZTTG87NZA==", "answer_id"=>"21"}
+  [1m[35mAnswer Load (0.5ms)[0m  SELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1  [["id", 21]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35m (0.4ms)[0m  BEGIN
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 21], ["votable_type", "Answer"], ["user_id", 13], ["created_at", "2015-02-12 16:10:42.949882"], ["updated_at", "2015-02-12 16:10:42.949882"]]
+  [1m[35m (1.9ms)[0m  COMMIT
+  [1m[36mQuestion Load (0.5ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mAnswer Load (0.5ms)[0m  [1mSELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 11]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "votes" WHERE "votes"."votable_id" = $1 AND "votes"."votable_type" = $2[0m  [["votable_id", 21], ["votable_type", "Answer"]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mComment Load (0.8ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = $1 AND "comments"."commentable_type" = $2[0m  [["commentable_id", 21], ["commentable_type", "Answer"]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered answers/_show.html.erb (99.6ms)
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (117.2ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (5.9ms)
+  Rendered layouts/_navbar.html.erb (23.8ms)
+Completed 200 OK in 527ms (Views: 507.5ms | ActiveRecord: 7.6ms)
+
+
+Started POST "/answers/21/votes.102" for ::1 at 2015-02-12 11:10:49 -0500
+Processing by VotesController#create as 
+  Parameters: {"authenticity_token"=>"BQhXS+ZbrERD1LWGTJdz+PzuyRBhrt9ioUGPwVNrJ5jPE5UuF5BEutoBuoj/k74NfCpwQGAfMYCO1CDukEQUbw==", "answer_id"=>"21"}
+  [1m[36mAnswer Load (0.4ms)[0m  [1mSELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1[0m  [["id", 21]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (6.7ms)[0m  INSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["votable_id", 21], ["votable_type", "Answer"], ["user_id", 13], ["created_at", "2015-02-12 16:10:49.811054"], ["updated_at", "2015-02-12 16:10:49.811054"]]
+  [1m[36m (5.4ms)[0m  [1mCOMMIT[0m
+  [1m[35mQuestion Load (0.4ms)[0m  SELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1  [["id", 11]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mAnswer Load (0.7ms)[0m  SELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1  [["question_id", 11]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "votes" WHERE "votes"."votable_id" = $1 AND "votes"."votable_type" = $2  [["votable_id", 21], ["votable_type", "Answer"]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mComment Load (0.6ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = $1 AND "comments"."commentable_type" = $2  [["commentable_id", 21], ["commentable_type", "Answer"]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered answers/_show.html.erb (12.4ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (23.3ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (2.2ms)
+  Rendered layouts/_navbar.html.erb (9.2ms)
+Completed 200 OK in 285ms (Views: 258.6ms | ActiveRecord: 15.7ms)
+
+
+Started POST "/answers/21/votes.103" for ::1 at 2015-02-12 11:10:58 -0500
+Processing by VotesController#create as 
+  Parameters: {"authenticity_token"=>"8DUtCq/iEfVCrSpO13ohcVTYvvoPBCPJX2MSShu0Tig6Lu9vXin5C9t4JUBkfuyE1BwHqg61zStw9r1l2Jt93w==", "answer_id"=>"21"}
+  [1m[35mAnswer Load (0.4ms)[0m  SELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1  [["id", 21]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (2.2ms)[0m  [1mINSERT INTO "votes" ("votable_id", "votable_type", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["votable_id", 21], ["votable_type", "Answer"], ["user_id", 13], ["created_at", "2015-02-12 16:10:58.387533"], ["updated_at", "2015-02-12 16:10:58.387533"]]
+  [1m[35m (1.0ms)[0m  COMMIT
+  [1m[36mQuestion Load (0.4ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mAnswer Load (0.4ms)[0m  [1mSELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 11]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "votes" WHERE "votes"."votable_id" = $1 AND "votes"."votable_type" = $2[0m  [["votable_id", 21], ["votable_type", "Answer"]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mComment Load (0.4ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = $1 AND "comments"."commentable_type" = $2[0m  [["commentable_id", 21], ["commentable_type", "Answer"]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered answers/_show.html.erb (89.9ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (107.4ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (2.8ms)
+  Rendered layouts/_navbar.html.erb (17.1ms)
+Completed 200 OK in 428ms (Views: 387.2ms | ActiveRecord: 6.2ms)
+
+
+Started GET "/answers/21/comments/new" for ::1 at 2015-02-12 11:11:13 -0500
+Processing by CommentsController#new as HTML
+  Parameters: {"answer_id"=>"21"}
+  [1m[36mAnswer Load (0.4ms)[0m  [1mSELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1[0m  [["id", 21]]
+  [1m[35mAnswer Load (0.6ms)[0m  SELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1  [["id", 21]]
+  Rendered comments/_form.html.erb (9.8ms)
+  Rendered comments/new.html.erb within layouts/application (13.9ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (5.9ms)
+  Rendered layouts/_navbar.html.erb (9.1ms)
+Completed 200 OK in 235ms (Views: 217.8ms | ActiveRecord: 3.5ms)
+
+
+Started POST "/answers/21/comments" for ::1 at 2015-02-12 11:11:18 -0500
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"0SNhmok6qT/3tnKNJxRxNLowfFoYqSn1Vh+759wNmj8bOKP/ePFBwW5jfYOUELzBOvTFChkYxxd5ihTIHyKpyA==", "comment"=>{"content"=>"Meta comment"}, "commit"=>"Create Comment", "answer_id"=>"21"}
+  [1m[35mAnswer Load (0.7ms)[0m  SELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1  [["id", 21]]
+  [1m[36mAnswer Load (0.2ms)[0m  [1mSELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1[0m  [["id", 21]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (6.5ms)[0m  INSERT INTO "comments" ("content", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["content", "Meta comment"], ["user_id", 13], ["created_at", "2015-02-12 16:11:18.533025"], ["updated_at", "2015-02-12 16:11:18.533025"]]
+  [1m[36m (5.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mUPDATE "comments" SET "commentable_id" = $1, "commentable_type" = $2, "updated_at" = $3 WHERE "comments"."id" = $4[0m  [["commentable_id", 21], ["commentable_type", "Answer"], ["updated_at", "2015-02-12 16:11:18.551252"], ["id", 61]]
+  [1m[35m (6.0ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  COMMIT
+Redirected to http://localhost:4001/questions/11
+Completed 302 Found in 43ms (ActiveRecord: 20.8ms)
+
+
+Started GET "/questions/11" for ::1 at 2015-02-12 11:11:18 -0500
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mQuestion Load (1.1ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mAnswer Load (0.3ms)[0m  [1mSELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 11]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "votes" WHERE "votes"."votable_id" = $1 AND "votes"."votable_type" = $2[0m  [["votable_id", 21], ["votable_type", "Answer"]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mComment Load (0.5ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = $1 AND "comments"."commentable_type" = $2[0m  [["commentable_id", 21], ["commentable_type", "Answer"]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered answers/_show.html.erb (20.4ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (29.2ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (1.0ms)
+  Rendered layouts/_navbar.html.erb (2.0ms)
+Completed 200 OK in 277ms (Views: 268.6ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/answers/21/comments/new" for ::1 at 2015-02-12 11:11:22 -0500
+Processing by CommentsController#new as HTML
+  Parameters: {"answer_id"=>"21"}
+  [1m[36mAnswer Load (0.2ms)[0m  [1mSELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1[0m  [["id", 21]]
+  [1m[35mAnswer Load (0.3ms)[0m  SELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1  [["id", 21]]
+  Rendered comments/_form.html.erb (2.9ms)
+  Rendered comments/new.html.erb within layouts/application (6.9ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (1.6ms)
+  Rendered layouts/_navbar.html.erb (2.7ms)
+Completed 200 OK in 191ms (Views: 187.6ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/answers/21/comments" for ::1 at 2015-02-12 11:11:29 -0500
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"OfZ+hoHVkEPJrs2RjuYkeeiJupAhZSVxkIQA8wALMlnz7bzjcB54vVB7wp894umMaE0DwCDUy5O/Ea/cwyQBrg==", "comment"=>{"content"=>"Double-meta comment"}, "commit"=>"Create Comment", "answer_id"=>"21"}
+  [1m[35mAnswer Load (0.4ms)[0m  SELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1  [["id", 21]]
+  [1m[36mAnswer Load (0.2ms)[0m  [1mSELECT  "answers".* FROM "answers" WHERE "answers"."id" = $1 LIMIT 1[0m  [["id", 21]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "comments" ("content", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["content", "Double-meta comment"], ["user_id", 13], ["created_at", "2015-02-12 16:11:29.472328"], ["updated_at", "2015-02-12 16:11:29.472328"]]
+  [1m[36m (1.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mUPDATE "comments" SET "commentable_id" = $1, "commentable_type" = $2, "updated_at" = $3 WHERE "comments"."id" = $4[0m  [["commentable_id", 21], ["commentable_type", "Answer"], ["updated_at", "2015-02-12 16:11:29.480193"], ["id", 62]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  COMMIT
+Redirected to http://localhost:4001/questions/11
+Completed 302 Found in 22ms (ActiveRecord: 4.8ms)
+
+
+Started GET "/questions/11" for ::1 at 2015-02-12 11:11:29 -0500
+Processing by QuestionsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mQuestion Load (0.4ms)[0m  [1mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mAnswer Load (0.4ms)[0m  [1mSELECT "answers".* FROM "answers" WHERE "answers"."question_id" = $1[0m  [["question_id", 11]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "votes" WHERE "votes"."votable_id" = $1 AND "votes"."votable_type" = $2[0m  [["votable_id", 21], ["votable_type", "Answer"]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mComment Load (0.6ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = $1 AND "comments"."commentable_type" = $2[0m  [["commentable_id", 21], ["commentable_type", "Answer"]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered answers/_show.html.erb (21.1ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered questions/show.html.erb within layouts/application (28.2ms)
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  [1m[35mCACHE (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 13]]
+  Rendered layouts/_login_bar.html.erb (3.8ms)
+  Rendered layouts/_navbar.html.erb (5.2ms)
+Completed 200 OK in 209ms (Views: 202.9ms | ActiveRecord: 2.7ms)

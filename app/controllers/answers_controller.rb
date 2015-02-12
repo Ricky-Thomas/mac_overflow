@@ -24,6 +24,10 @@ class AnswersController < ApplicationController
   end
 
   def update
+    # ADd a method to ApplicationController like
+    # @answer.is_owned_by?(current_user)
+
+    # Also, is probably a bug, this is assignment not comparison.
     if current_user = @answer.user_id
       if @answer.update(answer_params)
         redirect_to question_path(@answer.question_id)
@@ -43,15 +47,15 @@ class AnswersController < ApplicationController
 
   private
 
-  def set_answer
-    @answer = Answer.find(params[:id])
-  end
+    def set_answer
+      @answer = Answer.find(params[:id])
+    end
 
-  def set_question
-    @question = Question.find(params[:question_id])
-  end
+    def set_question
+      @question = Question.find(params[:question_id])
+    end
 
-  def answer_params
-    params.require(:answer).permit(:content, :question_id, :user_id)
-  end
+    def answer_params
+      params.require(:answer).permit(:content, :question_id, :user_id)
+    end
 end

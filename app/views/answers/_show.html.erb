@@ -8,8 +8,7 @@
           <div class="row" id="cheese_icons">
             <% if current_user %>
               <%= link_to "#{image_tag('/cheese_up.png')}".html_safe, answer_votes_path(answer.id, @vote), :method => :post %>
-              <%#image_submit_tag("/cheese_up.png", answer_votes_path(answer.id, @vote), :method => :post, class:"cheese_img") %>
-              <%=link_to "#{image_tag('/cheese_down.png')}".html_safe %>
+              <%= link_to "#{image_tag('/cheese_down.png')}".html_safe %>
             <% end %>
           </div>
           <div class="vote_count">
@@ -22,7 +21,7 @@
           <%= answer.content %><br><br>
 
           By <%= answer.user.name %><br>
-          Edited <%= ((Time.now.utc - answer.updated_at)/3600).round(2).to_s %>hrs ago<br>
+          Edited <%= hours_since_last_updated %>hrs ago<br>
           Answered <%= ((Time.now.utc - answer.updated_at)/3600).round(2).to_s %>hrs ago<br>
           <% if current_user %>
             <% if current_user.id == answer.user_id %>
@@ -32,6 +31,7 @@
           <% end %>
 
           <hr>
+          <%# maybe a partial here?  i.e. shared/_comment.html.erb ?%>
           <% answer.comments.each do |comment| %>
             <%= comment.content %> - <%= comment.user.name %> | <%= ((Time.now.utc - comment.created_at)/3600).round(2).to_s %> hrs ago  |
             <% if current_user.id == comment.user_id %>

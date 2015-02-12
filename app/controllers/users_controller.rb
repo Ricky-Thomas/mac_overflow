@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to('/users')
+    redirect_to users_path
   end
 
   def create
