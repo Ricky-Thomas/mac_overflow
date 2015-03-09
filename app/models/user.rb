@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :name, :email, :password_digest
 
-def authenticate_login(session_params)
+  def authenticate_login(session_params)
     if session_params[:email] == self.email
       self.authenticate(session_params[:password])
     else
