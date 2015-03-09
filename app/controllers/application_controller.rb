@@ -12,5 +12,10 @@ class ApplicationController < ActionController::Base
     self.user_id == current_user.id
   end
 
+  def viewing_own_profile?(current_user)
+    @user.id == current_user.id
+  end
+
   helper_method :current_user
+  helper_method :viewing_own_profile?
 end

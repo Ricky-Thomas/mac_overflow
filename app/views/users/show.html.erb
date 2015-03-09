@@ -16,13 +16,11 @@
 
     <div class="settings_container col-xs-4 col-sm-4">
       <div id="user_settings">
-        <% if current_user %>
-          <% if @user.id == current_user.id  %>
+          <% if viewing_own_profile?(current_user) %>
             <%= link_to "Edit Profile", edit_user_path(@user) %><br>
             <%= link_to "Delete Account", user_path(@user), method: :delete %><br>
             <%= link_to "Ask a New Question", new_question_path %>
           <% end %>
-        <% end %>
       </div>
     </div>
 
