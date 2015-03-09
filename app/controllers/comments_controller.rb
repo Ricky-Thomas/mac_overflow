@@ -42,9 +42,9 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find(params[:id])
-    @question = Question.find(@answer.question.id)
+    question = Question.find(@answer.question.id)
     comment.destroy
-    redirect_to question_path(@question)
+    redirect_to question_path(question)
   end
 
   private
