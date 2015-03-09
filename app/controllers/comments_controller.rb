@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if current_user = @comment.user_id
+    if @comment.is_owned_by?(current_user)
       if @comment.update(comment_params)
         redirect_to question_path(@answer.question_id)
       else
@@ -42,9 +42,9 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find(params[:id])
-    @question = Question.find(@answer.question.id)
+    question = Question.find(@answer.question.id)
     comment.destroy
-    redirect_to question_path(@question)
+    redirect_to question_path(question)
   end
 
   private

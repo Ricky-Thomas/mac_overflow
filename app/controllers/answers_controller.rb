@@ -25,7 +25,8 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user = @answer.user_id
+    # if current_user == @answer.user_id
+    if @answer.is_owned_by?(current_user)
       if @answer.update(answer_params)
         redirect_to question_path(@answer.question_id)
       else

@@ -9,7 +9,6 @@
           <div class="row" id="cheese_icons">
             <% if current_user %>
               <%= link_to "#{image_tag('/cheese_up.png')}".html_safe, answer_votes_path(answer.id, @vote), :method => :post %>
-              <%#image_submit_tag("/cheese_up.png", answer_votes_path(answer.id, @vote), :method => :post, class:"cheese_img") %>
               <%=link_to "#{image_tag('/cheese_down.png')}".html_safe, votes_destroy_path(answer.id, @vote), :method => :delete %>
             <% end %>
           </div>
