@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if current_user = @comment.user_id
+    if @comment.is_owned_by?(current_user)
       if @comment.update(comment_params)
         redirect_to question_path(@answer.question_id)
       else
