@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-def edited_time(item)
+  def edited_time(item)
     if Time.now - item.updated_at < 60
       (Time.now.utc - item.updated_at).round(0).to_s + " seconds ago"
     elsif Time.now - item.updated_at > 60 && Time.now - item.updated_at < 3600
