@@ -5,5 +5,7 @@
     <% else %>
       <li class="navbar-left" id="logo">MacOverflow</li>
       <li class="navbar-right"><%= link_to "Login", "/login", method: :get, :class => "btn btn-default navbar-btn navbar-right" %></li>
-      <li class="navbar-right"><%= link_to "Signup", new_user_path, method: :get, :class => "btn btn-default navbar-btn navbar-right" %></li>
+      <li class="btn btn-default navbar-btn navbar-right"><a id="go_signup" rel="leanModal" href="#signup" align="right" action="users#new">Signup</a></li>
 <% end %>
+
+
