@@ -35,7 +35,7 @@
           Comments: <br><br>
           <% answer.comments.each do |comment| %>
             <%= comment.content %> - <%= comment.user.name %> | Edited <%= edited_time(comment) %>  | Answered <%= answered_time(comment) %>
-            <% if current_user.id == comment.user_id %>
+            <% if editable?(answer) %>
               <%= link_to "Delete", [answer, comment], :method => :delete %>  |
               <%= link_to 'Edit', edit_answer_comment_path(answer.id, comment) %>
             <% end %><hr>

@@ -16,6 +16,13 @@ class ApplicationController < ActionController::Base
     @user.id == current_user.id
   end
 
+  def editable?(item)
+     if current_user
+       item.user.id == session[:user_id]
+     end
+   end
+
   helper_method :current_user
   helper_method :viewing_own_profile?
+  helper_method :editable?
 end
