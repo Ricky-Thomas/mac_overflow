@@ -127,3 +127,84 @@ ul {
 #login_form {
   margin-top: 10%;
 }
+
+
+#lean_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+
+
+#signup {
+  width: 404px;
+  padding: 20px;
+  display: none;
+  background: #FFF;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+  -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+  -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+  color: #000000;
+}
+
+
+#login {
+  width: 404px;
+  padding: 20px;
+  display: none;
+  background: #FFF;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+  -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+  -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+  color: #000000;
+}
+
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: left;
+}
+
+input {
+  display: inline-block;
+  float: left;
+  border: 1px solid #000;
+  background-color: #ffeef8;
+}
+
+.txt-fld {
+  padding-top: 10px;
+}
+
+.btn-fld {
+  float: right;
+  clear: both;
+}
+
+.modal_close {
+position: absolute;
+top: 12px;
+right: 12px;
+display: block;
+width: 14px;
+height: 14px;
+background: url(http://leanmodal.finelysliced.com.au/img/modal_close.png);
+z-index: 2;
+}
+
+#go_signup {
+  padding: 4px;
+}
