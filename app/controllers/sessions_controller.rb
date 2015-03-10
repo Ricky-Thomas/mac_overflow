@@ -9,12 +9,11 @@ class SessionsController < ApplicationController
       redirect_to user_path(user)
     else
       session[:errors] = "Invalid login credentials"
-      redirect_to "/login"
+      redirect_to root_path
     end
   end
 
   def new
-    render "login"
   end
 
   def destroy
