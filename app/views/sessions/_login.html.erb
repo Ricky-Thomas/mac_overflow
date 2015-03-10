@@ -1,0 +1,17 @@
+<div id="login" style="position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -202px; top: 200px;">
+  <div id="login-ct">
+    <div id="login-header">
+      <h2>Login</h2>
+      <a class="modal_close" href="#"></a>
+    </div>
+      <%= form_for login_path, :url => { :action => "create", :controller=> "sessions" } do |f| %>
+        <%= f.label :email %><br>
+        <%= f.text_field :email %><br>
+
+        <%= f.label :password %><br>
+        <%= f.password_field :password %><br><br>
+
+        <%= f.submit %>
+      <% end %>
+  </div>
+</div>
