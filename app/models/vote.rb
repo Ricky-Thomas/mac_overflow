@@ -3,11 +3,19 @@ class Vote < ActiveRecord::Base
   belongs_to :user
 
   def upvote
-  	self.status = 1
+  	if self.status && self.status < 1
+  		self.status+= 1
+  	else
+  		self.status = 1
+  	end
   end
 
   def downvote
-  	self.status = -1
+  	if self.status && self.status > -1
+  		self.status -= 1
+  	else
+  		self.status = -1
+  	end
   end
 
 end
