@@ -27,10 +27,8 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   post '/logout' => 'sessions#destroy'
 
-  # delete '/answers/:answer_id/votes/:id' => 'votes#destroy', :as => "delete_vote"
-
-delete '/answers/:answer_id/votes', to: 'votes#destroy', as: 'votes_destroy'
-
+  post '/answers/:answer_id/upvote', to: 'votes#upvote', as: 'votes_upvote'
+  post '/answers/:answer_id/downvote', to: 'votes#downvote', as: 'votes_downvote'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
