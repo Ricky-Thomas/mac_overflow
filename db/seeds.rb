@@ -60,13 +60,13 @@ end
 comments = Comment.all
 
 
-100.times do
-  Vote.create(
-    votable_id: rand(1..10),
-    votable_type: [Question, Answer].sample,
-    user_id: users.sample.id
-    )
-end
+# 100.times do
+#   Vote.create(
+#     votable_id: rand(1..10),
+#     votable_type: [Question, Answer].sample,
+#     user_id: users.sample.id
+#     )
+# end
 
 
 
