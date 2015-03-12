@@ -6,5 +6,11 @@ class Answer < ActiveRecord::Base
 
   validates_presence_of :content, :question_id, :user_id
 
-
+  def score
+  	count = 0
+  	self.votes.each do |vote|
+  	 count = count + vote.status
+  	end
+  	count
+  end
 end
