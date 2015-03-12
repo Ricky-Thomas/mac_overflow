@@ -5,4 +5,9 @@ class Vote < ActiveRecord::Base
   def upvote
   	self.status = 1
   end
+
+  def downvote
+  	self.status = -1
+  end
+
 end
