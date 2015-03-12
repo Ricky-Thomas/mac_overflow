@@ -22,6 +22,24 @@ class VotesController < ApplicationController
     redirect_to question_path(@question)
   end
 
+  def upvote
+    @vote = @answer.votes.where(user_id: current_user).first_or_create()
+    @vote.upvote
+    @vote.save
+    @question = Question.find(@answer.question_id)
+    @answers = @question.answers
+    redirect_to question_path(@question)
+
+  end
+
+  def downvote
+    @vote = @answer.votes.where(user_id: current_user).first_or_create()
+    @vote.downvote
+    @vote.save
+    @question = Question.find(@answer.question_id)
+    @answers = @question.answers
+    redirect_to question_path(@question)
+  end
   private
     def set_answer
       @answer = Answer.find(params[:answer_id])

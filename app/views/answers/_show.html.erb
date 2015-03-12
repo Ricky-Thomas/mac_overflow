@@ -8,12 +8,12 @@
         <div class="vote_container col-xs-2 col-sm-1">
           <div class="row" id="cheese_icons">
             <% if current_user %>
-              <%= link_to "#{image_tag('/cheese_up.png')}".html_safe, answer_votes_path(answer.id, @vote), :method => :post %>
-              <%=link_to "#{image_tag('/cheese_down.png')}".html_safe, votes_destroy_path(answer.id, @vote), :method => :delete %>
+              <%= link_to "#{image_tag('/cheese_up.png')}".html_safe, votes_upvote_path(answer.id, @vote), :method => :post %>
+              <%=link_to "#{image_tag('/cheese_down.png')}".html_safe, votes_downvote_path(answer.id, @vote), :method => :post %>
             <% end %>
           </div>
           <div class="vote_count">
-            <%= answer.votes.count %>
+            <%= answer.score %>
           </div>
         </div>
 
