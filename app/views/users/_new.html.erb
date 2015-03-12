@@ -1,0 +1,24 @@
+<div id="signup" style="position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -202px; top: 200px;">
+  <div id="signup-ct">
+    <div id="signup-header">
+      <h2>Create a new account</h2>
+      <p>It's simple, and free. Get answers to all of your mac & cheese questions!</p>
+      <a class="modal_close" href="#"></a>
+    </div>
+      <%= form_for @user do |f| %>
+        <%= f.label :name %><br>
+        <%= f.text_field :name %><br>
+
+        <%= f.label :email %><br>
+        <%= f.email_field :email %><br>
+
+        <%= f.label :password %><br>
+        <%= f.password_field :password %><br>
+
+        <%= f.label :password_confirmation %><br>
+        <%= f.password_field :password_confirmation %><br><br>
+
+        <%= f.submit %>
+      <% end %>
+  </div>
+</div>
