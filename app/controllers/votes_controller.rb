@@ -26,6 +26,7 @@ class VotesController < ApplicationController
     @vote = @answer.votes.where(user_id: current_user).first_or_create()
     @vote.upvote
     @vote.save
+    @answer.score_tally
     @question = Question.find(@answer.question_id)
     @answers = @question.answers
     redirect_to question_path(@question)
@@ -36,6 +37,7 @@ class VotesController < ApplicationController
     @vote = @answer.votes.where(user_id: current_user).first_or_create()
     @vote.downvote
     @vote.save
+    @answer.score_tally
     @question = Question.find(@answer.question_id)
     @answers = @question.answers
     redirect_to question_path(@question)

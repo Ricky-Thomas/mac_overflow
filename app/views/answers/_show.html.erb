@@ -2,8 +2,8 @@
   <div class="answers_list">
 
     <div class="answer-row">
-    <% @answers.each do |answer| %>
 
+    <% @answers.order(score: :desc).each do |answer| %>
       <div class="row">
         <div class="vote_container col-xs-2 col-sm-1">
           <div class="row" id="cheese_icons">
