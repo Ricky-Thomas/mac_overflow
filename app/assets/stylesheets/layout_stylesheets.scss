@@ -44,12 +44,13 @@ ul {
 #login-nav {
   background-color: rgb(60,60,60);
   padding: 0 10%;
+  margin-bottom: 0px;
 }
 
 #button-nav {
-  background-color: rgba(0,0,0,0);
+  background-color: rgb(60, 60, 60);
   padding: 0 10%;
-  border: 0 rgba(0,0,0,0);
+  border-bottom: 1px solid white;
 }
 
 .profile_pic img {
@@ -63,7 +64,6 @@ ul {
 }
 
 .btn:hover {
-  border:1px solid rgb(239, 210, 93);
   color:rgb(239, 197, 71);
 }
 
@@ -210,5 +210,9 @@ z-index: 2;
 }
 
 #go_signup {
+  padding: 4px;
+}
+
+#go_login {
   padding: 4px;
 }
