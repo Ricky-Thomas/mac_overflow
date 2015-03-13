@@ -40,7 +40,7 @@ ul {
 #logo_link:hover {
   font-family: 'Lobster Two', cursive;
   font-size:3em;
-  color: rgb(239, 197, 71);
+  color: #FFE097;
   background-color: transparent;
 }
 
@@ -65,13 +65,23 @@ ul {
 }
 
 .btn {
-  background-color: rgb(217, 199, 160);
-  border:0 rgba(0,0,0,0);
+  background-color: #FFE097;
+  color:rgb(170, 57, 0);
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
+.btn a {
+  color:rgb(170, 57, 0);
+}
+
+.btn a:hover {
+  color:#F49228;
+  background-color:#EEEEEE;
+}
+
 .btn:hover {
-  color:rgb(239, 197, 71);
+  color:#F49228;
+  background-color:#EEEEEE;
 }
 
 .vote_container {
