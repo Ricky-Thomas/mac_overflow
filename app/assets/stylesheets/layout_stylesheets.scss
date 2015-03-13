@@ -31,10 +31,18 @@ ul {
   margin-right: 0px;
 }
 
-#logo {
+#logo_link {
   font-family: 'Lobster Two', cursive;
   font-size:3em;
   color: white;
+  padding:0px;
+}
+
+#logo_link:hover {
+  font-family: 'Lobster Two', cursive;
+  font-size:3em;
+  color: rgb(239, 197, 71);
+  background-color: transparent;
 }
 
 #welcome-img {
