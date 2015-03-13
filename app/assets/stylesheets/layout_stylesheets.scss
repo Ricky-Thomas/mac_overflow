@@ -182,7 +182,11 @@ input {
   display: inline-block;
   float: left;
   border: 1px solid #000;
-  background-color: #ffeef8;
+  background-color: #F9EBA8;
+}
+
+input[type=submit] {
+  float:right;
 }
 
 .txt-fld {
