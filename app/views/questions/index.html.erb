@@ -1,7 +1,9 @@
-<h1>All Questions</h1><br>
+<div class="container">
+  <h1>All Questions</h1><br>
 
-<div class="questions_list">
-  <% @questions.each do |question| %>
-    <%= question.answers.count %> (answers) <%= link_to "#{question.title}", question_path(question) %><br><hr>
-  <% end %>
+  <div class="questions_list">
+    <% @questions.each do |question| %>
+      <%= question.answers.count %> (answers) <%= link_to "#{question.title}", question_path(question) %><br><hr>
+    <% end %>
+  </div>
 </div>

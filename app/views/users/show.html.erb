@@ -1,39 +1,41 @@
-<div id="user_profile">
-  <div class="row">
+<div class="container">
+  <div id="user_profile">
+    <div class="row">
+      <hr>
+      <div class="pic_container col-xs-4 col-sm-4">
+        <div class="profile_pic">
+          <img src="<%=@user.pic_url%>">
+        </div>
+      </div>
+
+      <div class="info_container col-xs-4 col-sm-4">
+        <div class="user_info">
+          <h2>Name:</h2></h3><%= @user.name %></h3><br>
+          <h2>Email:</h2></h3><%= @user.email %></h3><br>
+        </div>
+      </div>
+
+      <div class="settings_container col-xs-4 col-sm-4">
+        <div id="user_settings">
+            <% if viewing_own_profile?(current_user) %>
+              <%= link_to "Edit Profile", edit_user_path(@user) %><br>
+              <%= link_to "Delete Account", user_path(@user), method: :delete %><br>
+              <%= link_to "Ask a New Question", new_question_path %>
+            <% end %>
+        </div>
+      </div>
+
+    </div>
     <hr>
-    <div class="pic_container col-xs-4 col-sm-4">
-      <div class="profile_pic">
-        <img src="<%=@user.pic_url%>">
-      </div>
-    </div>
 
-    <div class="info_container col-xs-4 col-sm-4">
-      <div class="user_info">
-        <h2>Name:</h2></h3><%= @user.name %></h3><br>
-        <h2>Email:</h2></h3><%= @user.email %></h3><br>
-      </div>
-    </div>
-
-    <div class="settings_container col-xs-4 col-sm-4">
-      <div id="user_settings">
-          <% if viewing_own_profile?(current_user) %>
-            <%= link_to "Edit Profile", edit_user_path(@user) %><br>
-            <%= link_to "Delete Account", user_path(@user), method: :delete %><br>
-            <%= link_to "Ask a New Question", new_question_path %>
-          <% end %>
-      </div>
+    <div id="user-questions-list">
+      <h2><%= @user.name %>'s Questions:</h2>
+      <ul>
+        <% @user.questions.each do |question| %>
+          <li><%= link_to "#{question.title}", question_path(question) %></li><hr>
+        <% end %>
+      </ul>
     </div>
 
   </div>
-  <hr>
-
-  <div id="user-questions-list">
-    <h2><%= @user.name %>'s Questions:</h2>
-    <ul>
-      <% @user.questions.each do |question| %>
-        <li><%= link_to "#{question.title}", question_path(question) %></li><hr>
-      <% end %>
-    </ul>
-  </div>
-
 </div>
