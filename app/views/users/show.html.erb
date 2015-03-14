@@ -1,22 +1,32 @@
-<div class="container">
+<div class="container" id="scrolling-ct">
   <div id="user_profile">
     <div class="row">
-      <hr>
-      <div class="pic_container col-xs-4 col-sm-4">
-        <div class="profile_pic">
-          <img src="<%=@user.pic_url%>">
-        </div>
+      <div class="pic_container col-xs-12 col-sm-8">
+          <img src="<%=@user.pic_url%>" class="img-rounded img responsive">
       </div>
+      <div id="mac_info" class="col-xs-12 col-sm-4 pull-right">
+        <h2>Bacon Extreme Mac n' Scream</h2>
+        <ul>
+          <li>3/4 cups elbow macaroni</li>
+          <li>2 cups milk</li>
+          <li>3 tablespoons butter or margarine</li>
+          <li>2 tablespoons flour</li>
+          <li>2 cups cheddar cheese</li>
+          <li>3 slices of bacon</li>
+        </ul>
+        <hr>
+        <ol>
+          <li>Heat oven to 350 degrees F.</li>
+          <li>Cook macaroni as directed on package. Meanwhile, melt butter in large saucepan on low heat. Stir in flour; cook 2 min. or until bubbly. Gradually stir in milk; cook on medium heat until mixture comes to boil, stirring constantly. Simmer on low heat 3 to 5 min. or until thickened. Add 1 1/2 cups cheese; cook and stir 5 min. or until melted.</li>
+          <li>Drain macaroni. Add to sauce with bacon; mix lightly. Spoon into 1 1/2 quart casserole; top with remaining cheese.</li>
+          <li>Bake 20 min. or until heated through.</li>
+        </ol><hr>
+      </div>
+    </div>
 
-      <div class="info_container col-xs-4 col-sm-4">
         <div class="user_info">
-          <h2>Name:</h2></h3><%= @user.name %></h3><br>
-          <h2>Email:</h2></h3><%= @user.email %></h3><br>
         </div>
-      </div>
 
-      <div class="settings_container col-xs-4 col-sm-4">
-        <div id="user_settings">
             <% if viewing_own_profile?(current_user) %>
               <%= link_to "Edit Profile", edit_user_path(@user) %><br>
               <%= link_to "Delete Account", user_path(@user), method: :delete %><br>
