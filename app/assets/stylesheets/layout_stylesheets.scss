@@ -16,7 +16,7 @@ ul {
   background-image: url("/apple-cheese.jpg");
   background-size: 100% 100%;
   margin-top: -20px;
-  height: 100%;
+  height: 87vh;
 }
 
 .container {
@@ -24,17 +24,24 @@ ul {
   height: 100%;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   text-align: center;
-  overflow:scroll;
 }
 
 .navbar-right {
   margin-right: 0px;
 }
 
-#logo {
+#logo_link {
   font-family: 'Lobster Two', cursive;
   font-size:3em;
   color: white;
+  padding:0px;
+}
+
+#logo_link:hover {
+  font-family: 'Lobster Two', cursive;
+  font-size:3em;
+  color: #FFE097;
+  background-color: transparent;
 }
 
 #welcome-img {
@@ -44,12 +51,13 @@ ul {
 #login-nav {
   background-color: rgb(60,60,60);
   padding: 0 10%;
+  margin-bottom: 0px;
 }
 
 #button-nav {
-  background-color: rgba(0,0,0,0);
+  background-color: rgb(60, 60, 60);
   padding: 0 10%;
-  border: 0 rgba(0,0,0,0);
+  border-bottom: 1px solid white;
 }
 
 .profile_pic img {
@@ -57,14 +65,23 @@ ul {
 }
 
 .btn {
-  background-color: rgb(217, 199, 160);
-  border:0 rgba(0,0,0,0);
+  background-color: #FFE097;
+  color:rgb(170, 57, 0);
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
+.btn a {
+  color:rgb(170, 57, 0);
+}
+
+.btn a:hover {
+  color:#F49228;
+  background-color:#EEEEEE;
+}
+
 .btn:hover {
-  border:1px solid rgb(239, 210, 93);
-  color:rgb(239, 197, 71);
+  color:#F49228;
+  background-color:#EEEEEE;
 }
 
 .vote_container {
@@ -99,10 +116,6 @@ ul {
 .info_container {
   text-align: left;
   font-size: 1.25em;
-}
-
-#user_profile {
-  margin: 10% 20%;
 }
 
 #user_settings {
@@ -182,7 +195,11 @@ input {
   display: inline-block;
   float: left;
   border: 1px solid #000;
-  background-color: #ffeef8;
+  background-color: #F9EBA8;
+}
+
+input[type=submit] {
+  float:right;
 }
 
 .txt-fld {
@@ -207,4 +224,24 @@ z-index: 2;
 
 #go_signup {
   padding: 4px;
+}
+
+#go_login {
+  padding: 4px;
+}
+
+#question_button {
+  margin-left:2px;
+}
+
+#scrolling-ct {
+  overflow: scroll;
+}
+
+#mac_info h2 {
+  font-family: 'Lobster Two', cursive;
+}
+
+#mac_info ol {
+  text-align:left;
 }

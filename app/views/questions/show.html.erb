@@ -1,29 +1,31 @@
-<div class="row">
-  <div class="question_prompt">
-    <h1><%= @question.title %></h1><br><hr>
-    <%= @question.prompt %><br><br>
-    By <%= @question.user.name %><br>
-    Edited <%= edited_time(@question) %><br>
-    Answered <%= answered_time(@question) %>
-    <% if current_user %>
-      <% if current_user.id == @question.user_id %>
-        <%= button_to "Edit", edit_question_path(@question), :method => :get %>
-        <%= button_to "Delete", @question, :method => :delete %>
+<div class="container" id="scrolling-ct">
+  <div class="row">
+    <div class="question_prompt">
+      <h1><%= @question.title %></h1><br><hr>
+      <%= @question.prompt %><br><br>
+      By <%= @question.user.name %><br>
+      Edited <%= edited_time(@question) %><br>
+      Answered <%= answered_time(@question) %>
+      <% if current_user %>
+        <% if current_user.id == @question.user_id %>
+          <%= button_to "Edit", edit_question_path(@question), :method => :get %>
+          <%= button_to "Delete", @question, :method => :delete %>
+        <% end %>
       <% end %>
+    </div><hr><br>
+  </div>
+
+
+  <%= render "answers/show" %>
+  <hr>
+
+
+  <button id="show-answer-form"> Add Answer </button>
+
+  <div id="add-answer" style="display:none">
+    <% if current_user %>
+      <%= render :partial => "answers/form" %>
     <% end %>
-  </div><hr><br>
+  </div>
+  <br><br><br><br>
 </div>
-
-
-<%= render "answers/show" %>
-<hr>
-
-
-<button id="show-answer-form"> Add Answer </button>
-
-<div id="add-answer" style="display:none">
-  <% if current_user %>
-    <%= render :partial => "answers/form" %>
-  <% end %>
-</div>
-<br><br><br><br>

@@ -1,10 +1,9 @@
  <% if current_user %>
-      <li class="navbar-left" id="logo">MacOverflow</li>
+      <li class="navbar-left" id="logo"><%= link_to "MacOverflow", root_path, id: "logo_link" %></li>
       <li class="navbar-right"><%= link_to "Welcome #{current_user.name.capitalize}", user_path(current_user.id), method: :get, :class => "btn btn-default navbar-btn navbar-right" %></li>
       <li class="navbar-right"><%= link_to "Logout", "/logout", method: :post, :class => "btn btn-default navbar-btn navbar-right" %></li>
     <% else %>
-      <li class="navbar-left" id="logo">MacOverflow</li>
+      <li class="navbar-left" id="logo"><%= link_to "MacOverflow", root_path, id: "logo_link" %></li>
        <li class="btn btn-default navbar-btn navbar-right"><a id="go_login" rel="leanModal" href="#login" align="right">Login</a></li>
       <li class="btn btn-default navbar-btn navbar-right"><a id="go_signup" rel="leanModal" href="#signup" align="right">Signup</a></li>
 <% end %>
-
