@@ -118,10 +118,6 @@ ul {
   font-size: 1.25em;
 }
 
-#user_profile {
-  margin: 10% 20%;
-}
-
 #user_settings {
   float: right;
   text-align: right;
@@ -240,4 +236,12 @@ z-index: 2;
 
 #scrolling-ct {
   overflow: scroll;
+}
+
+#mac_info h2 {
+  font-family: 'Lobster Two', cursive;
+}
+
+#mac_info ol {
+  text-align:left;
 }
