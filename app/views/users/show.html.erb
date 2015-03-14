@@ -40,18 +40,19 @@
             <% end %>
         </div>
       </div>
-
     </div>
     <hr>
 
-    <div id="user-questions-list">
-      <h2><%= @user.name %>'s Questions:</h2>
-      <ul>
-        <% @user.questions.each do |question| %>
-          <li><%= link_to "#{question.title}", question_path(question) %></li><hr>
-        <% end %>
-      </ul>
-    </div>
+    <% if @user.questions.first != nil %>
+      <div id="user-questions-list">
+        <h2><%= @user.name %>'s Questions:</h2>
+        <ul>
+          <% @user.questions.each do |question| %>
+            <li><%= link_to "#{question.title}", question_path(question) %></li><hr>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
   </div>
 </div>
