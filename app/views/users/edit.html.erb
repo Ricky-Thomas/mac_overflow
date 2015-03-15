@@ -1,16 +1,12 @@
 <div class="container">
   <h1>Edit Profile:</h1>
-  <%= form_for @user do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %><br><br>
-
-    <%= f.label :email %>
-    <%= f.text_field :email %><br><br>
-
-    <%= f.label :pic_url %>
-    <%= f.text_field :pic_url %><br><br>
-
-    <%= f.submit %><br>
-
+  <%= form_tag({controller: "users", action: "update"}, method: "patch") do %>
+    <%= label_tag(:'user[:name]', "Name") %>
+    <%= text_field_tag(:'user[:name]') %><br><br>
+    <%= label_tag(:'user[:email]', "Email") %>
+    <%= text_field_tag(:'user[:email]') %><br><br>
+    <%= label_tag(:'user[:pic_url]') %>
+    <%= text_field_tag(:'user[:pic_url]') %><br><br>
+    <%= submit_tag("Submit") %>
   <% end %>
 </div>
