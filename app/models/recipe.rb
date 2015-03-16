@@ -9,4 +9,12 @@ class Recipe < ActiveRecord::Base
    self.ingredients << ingredient
    end
   end
+
+  def parse_instructions!(instructions_str)
+   instructions_str.split(',').map(&:strip).uniq.each do |instruction_str|
+   instruction = Instruction.where(description: instruction_str).first_or_create
+   self.instructions << instruction
+   end
+  end
+
 end
