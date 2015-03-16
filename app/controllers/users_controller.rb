@@ -15,7 +15,11 @@ class UsersController < ApplicationController
   end
 
   def update
+    recipe = Recipe.create(name: params['recipe_name'])
+    recipe.parse_ingredients!(params[:ingredients])
+    recipe.parse_instructions!(params[:instructions])
     if @user.update(user_params)
+      @user.recipe = recipe
       redirect_to user_path(@user)
     else
       render :edit
