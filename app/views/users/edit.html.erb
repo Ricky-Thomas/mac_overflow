@@ -5,7 +5,9 @@
     <%= text_field_tag(:'user[:name]') %><br><br>
     <%= label_tag(:'user[:email]', "Email") %>
     <%= text_field_tag(:'user[:email]') %><br><br>
-    <%= label_tag(:'user[:pic_url]') %>
+    <%= label_tag(:'recipe[:name]', "The Name of your homestyle MacNCheese Recipe") %>
+    <%= text_field_tag(:'recipe[:name]') %><br><br>
+    <%= label_tag(:'user[:pic_url]', "URL for picture of your recipe") %>
     <%= text_field_tag(:'user[:pic_url]') %><br><br>
     <%= submit_tag("Submit") %>
   <% end %>
