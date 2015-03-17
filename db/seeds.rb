@@ -14,12 +14,18 @@ mac_and_cheese_page = Nokogiri::HTML(open("https://www.google.com/search?q=mac+a
 mac_and_cheese_links = mac_and_cheese_page.css('img').map {|image| image['src']}
 
 10.times do
-  User.create(
+  user = User.create(
       name: Faker::Name.name,
       email: Faker::Internet.email,
       password: "123",
       pic_url: mac_and_cheese_links.sample
       )
+  recipe = Recipe.create(name: Faker::Lorem.sentence)
+  5.times do
+    recipe.ingredients << Ingredient.create(name: Faker::Lorem.word)
+    recipe.instructions << Instruction.create(description: Faker::Lorem.sentence)
+  end
+  user.recipe = recipe
 end
 
 users = User.all

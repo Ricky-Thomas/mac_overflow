@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :votes
   has_many :comments
+  has_one  :recipe
 
   validates_presence_of :name, :email, :password_digest
 

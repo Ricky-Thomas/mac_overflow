@@ -9,13 +9,27 @@ class UsersController < ApplicationController
   end
 
   def edit
+    if @user.recipe == nil
+      @recipe_name = "Your Recipe Name"
+      @ingredients_str =  "Your ingredients"
+      @instructions_str = "Your instructions"
+    else
+      @recipe_name = @user.recipe.name
+      @ingredients_str =  @user.recipe.ingredients_str
+      @instructions_str = @user.recipe.instructions_str
+    end
   end
 
   def show
+    @recipe = @user.recipe
   end
 
   def update
-    if @user.update(user_params)
+    recipe = Recipe.create(name: params['recipe_name'], ingredients_str: params[:ingredients], instructions_str: params[:instructions])
+    recipe.parse_ingredients!(params[:ingredients])
+    recipe.parse_instructions!(params[:instructions])
+    if @user.update_attributes(user_params)
+      @user.recipe = recipe
       redirect_to user_path(@user)
     else
       render :edit
@@ -32,7 +46,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to user_path(@user)
+      redirect_to edit_user_path(@user)
     else
       redirect_to root_path
     end
