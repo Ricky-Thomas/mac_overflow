@@ -25,10 +25,10 @@ class UsersController < ApplicationController
   end
 
   def update
-    recipe = Recipe.create(name: params['recipe_name'])
+    recipe = Recipe.create(name: params['recipe_name'], ingredients_str: params[:ingredients], instructions_str: params[:instructions])
     recipe.parse_ingredients!(params[:ingredients])
     recipe.parse_instructions!(params[:instructions])
-    if @user.update(user_params)
+    if @user.update_attributes(user_params)
       @user.recipe = recipe
       redirect_to user_path(@user)
     else
