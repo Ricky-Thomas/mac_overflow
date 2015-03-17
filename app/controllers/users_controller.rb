@@ -9,6 +9,15 @@ class UsersController < ApplicationController
   end
 
   def edit
+    if @user.recipe == nil
+      @recipe_name = "Your Recipe Name"
+      @ingredients_str =  "Your ingredients"
+      @instructions_str = "Your instructions"
+    else
+      @recipe_name = @user.recipe.name
+      @ingredients_str =  @user.recipe.ingredients_str
+      @instructions_str = @user.recipe.instructions_str
+    end
   end
 
   def show
