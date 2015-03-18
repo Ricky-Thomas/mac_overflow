@@ -116,6 +116,7 @@ ul {
 
 .pic_container {
   padding-top: 3%;
+  width: 50%;
 }
 
 .pic_container img {
@@ -126,6 +127,11 @@ ul {
 .info_container {
   text-align: left;
   font-size: 1.25em;
+  width:30%;
+}
+
+div#mac_info {
+  margin-right: 12%;
 }
 
 #user_settings {
@@ -295,7 +301,7 @@ form#new_comment {
 }
 
 
-p {
+#your-comment {
   text-align: center;
 }
 
