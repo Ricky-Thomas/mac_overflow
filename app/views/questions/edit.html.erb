@@ -1,10 +1,10 @@
 <%= form_for @question do |f| %>
 
-  <%= f.label :title %>
-  <%= f.text_area :title %>
+  <%= f.label :title %><br>
+  <%= f.text_area :title %><br>
 
   <%= f.label :prompt %>
   <%= f.text_area :prompt %>
 
-  <%= f.submit %>
+  <button type="submit" class="btn btn-default">Submit</button>
 <% end %>
