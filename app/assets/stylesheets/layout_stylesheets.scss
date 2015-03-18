@@ -255,3 +255,24 @@ z-index: 2;
 #mac_info ol {
   text-align:left;
 }
+
+.question-labels {
+  margin-left: 48%;
+  margin-right: 40%;
+}
+
+textarea#question_title {
+  margin: 0 auto;
+  width: 300px;
+  height: 50px;
+}
+
+textarea#question_prompt {
+  margin: 0 auto;
+  width: 300px;
+  height: 150px;
+}
+
+input.create_question_submit {
+  margin-right: 45%;
+}

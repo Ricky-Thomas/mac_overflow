@@ -2,13 +2,13 @@
   <div id="question_form">
     <%= form_for @question do |f| %>
 
-      <%= f.label :title %><br>
+      <%= f.label :title, class: 'question-labels' %><br>
       <%= f.text_area :title %><br>
 
-      <%= f.label :prompt %><br>
+      <%= f.label :prompt, class: 'question-labels' %><br>
       <%= f.text_area :prompt %><br>
 
-      <%= f.submit %>
+      <%= f.submit 'Create Question', :class => 'create_question_submit' %>
     <% end %>
   </div>
 </div>
