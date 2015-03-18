@@ -1,6 +1,6 @@
 <%= form_for [@answer, @comment] do |f| %>
-  <%= f.label :content %>
+  <%= f.label :content, class: 'comment-labels' %>
   <%= f.text_area :content %><br>
 
-  <%= f.submit %>
+  <button type="submit" class="btn btn-default">Submit</button>
 <% end %>

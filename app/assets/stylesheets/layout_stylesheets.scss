@@ -116,6 +116,7 @@ ul {
 
 .pic_container {
   padding-top: 3%;
+  width: 50%;
 }
 
 .pic_container img {
@@ -126,6 +127,11 @@ ul {
 .info_container {
   text-align: left;
   font-size: 1.25em;
+  width:30%;
+}
+
+div#mac_info {
+  margin-right: 12%;
 }
 
 #user_settings {
@@ -254,4 +260,63 @@ z-index: 2;
 
 #mac_info ol {
   text-align:left;
+}
+
+.question-labels {
+  margin-left: 48%;
+  margin-right: 40%;
+}
+
+textarea#question_title {
+  margin: 0 auto;
+  width: 300px;
+  height: 50px;
+}
+
+textarea#question_prompt {
+  margin: 0 auto;
+  width: 300px;
+  height: 150px;
+}
+
+
+
+form#new_answer {
+  text-align:center;
+}
+
+.answer-labels {
+  margin-left: 48%;
+  margin-right: 40%;
+}
+
+.comment-labels {
+  margin-left: 48%;
+  margin-right: 40%;
+}
+
+
+form#new_comment {
+  text-align: center;
+}
+
+
+#your-comment {
+  text-align: center;
+}
+
+textarea#comment_content {
+  width: 300px;
+  height: 50px;
+}
+
+
+
+.edit-question-label {
+  margin-left: 48%;
+  margin-right: 40%;
+}
+
+.edit-question-textarea {
+  margin-left: 40%;
 }

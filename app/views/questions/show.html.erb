@@ -7,9 +7,9 @@
       Edited <%= edited_time(@question) %><br>
       Answered <%= answered_time(@question) %>
       <% if current_user %>
-        <% if current_user.id == @question.user_id %>
-          <%= button_to "Edit", edit_question_path(@question), :method => :get %>
-          <%= button_to "Delete", @question, :method => :delete %>
+        <% if current_user.id == @question.user_id %><br><br>
+          <%= link_to "Edit", edit_question_path(@question), :method => :get %><br>
+          <%= link_to "Delete", @question, :method => :delete %>
         <% end %>
       <% end %>
     </div><hr><br>
