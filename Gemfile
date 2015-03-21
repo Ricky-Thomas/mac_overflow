@@ -35,7 +35,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #Use Heroku for Deployment
 gem 'heroku'
 gem 'rails_12factor'
-gem 'faker'
 
 
 group :development, :test do
